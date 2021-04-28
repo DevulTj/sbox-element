@@ -39,12 +39,12 @@ namespace ElementGame
 			if ( weapon != null && !weapon.UnlimitedAmmo )
 			{
 				var inv = weapon.AvailableAmmo();
-				Inventory.Text = $"/ {inv}";
+				Inventory.Text = $"| {inv}";
 				Inventory.SetClass( "active", inv >= 0 );
 			}
 			else
 			{
-				Inventory.Text = $"/ ∞";
+				Inventory.Text = $"| ∞";
 				Inventory.SetClass( "active", true );
 			}
 		}

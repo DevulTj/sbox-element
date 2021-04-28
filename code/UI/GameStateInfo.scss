@@ -1,0 +1,31 @@
+gamestateinfo {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 40px;
+    text-shadow: 0px 0px 20px #000;
+
+    label {
+        font-family: Biko;
+        color: white;
+    }
+
+    .firstText {
+        background-color: rgba(80, 80, 80, 0.5);
+        font-size: 32px;
+        border-radius: 25px;
+        padding: 8px 24px;
+        border: 2px solid rgba(80, 80, 80, 1);
+    }
+
+    .secondText {
+        left: 8px;
+        background-color: rgba(80, 80, 80, 0.5);
+        font-size: 32px;
+        border-radius: 25px;
+        padding: 8px 24px;
+        border: 2px solid rgba(80, 80, 80, 1);
+    }
+}
