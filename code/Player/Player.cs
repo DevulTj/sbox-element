@@ -6,6 +6,8 @@ namespace ElementGame
 {
 	partial class ElementPlayer : BasePlayer
 	{
+		protected DamageInfo LastDamage;
+
 		public ElementPlayer()
         {
 			Inventory = new Inventory( this );
@@ -48,5 +50,35 @@ namespace ElementGame
 		{
 			base.Tick();
 		}
+
+		public override void OnKilled()
+		{
+			base.OnKilled();
+
+			//
+			Inventory.DropActive();
+
+			//
+			// Delete any items we didn't drop
+			//
+			Inventory.DeleteContents();
+
+			BecomeRagdollOnClient( LastDamage.Force, GetHitboxBone( LastDamage.HitboxIndex ) );
+
+			Controller = null;
+
+			Camera = new SpectateRagdollCamera();
+
+			EnableAllCollisions = false;
+			EnableDrawing = false;
+		}
+
+
+		public override void TakeDamage( DamageInfo info )
+        {
+			LastDamage = info;
+
+			base.TakeDamage( info );
+        }
 	}
 }

@@ -45,7 +45,7 @@ namespace ElementGame
 			//
 			// Shoot the bullets
 			//
-			ShootBullet( 0.1f, 1.5f, 5.0f, 3.0f );
+			ShootBullet( 0.1f, 1.5f, Rand.Float( 15.0f, 25.0f ), 3.0f );
 
 		}
 
