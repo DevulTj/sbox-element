@@ -16,6 +16,8 @@ namespace ElementGame
 
 			RootPanel.AddChild<WeaponInfo>();
 			RootPanel.AddChild<HeroInfo>();
+			RootPanel.AddChild<VitalsInfo>();
+
 			RootPanel.AddChild<ChatBox>();
 		}
 	}
