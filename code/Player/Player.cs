@@ -6,7 +6,8 @@ namespace ElementGame
 {
 	partial class ElementPlayer : BasePlayer
 	{
-		protected DamageInfo LastDamage;
+		[NetLocal]
+		public DamageInfo LastDamage { get; protected set; }
 
 		public ElementPlayer()
         {
@@ -67,7 +68,9 @@ namespace ElementGame
 
 			Controller = null;
 
-			Camera = new SpectateRagdollCamera();
+			var killCam = new KillCamera();
+
+			Camera = killCam;
 
 			EnableAllCollisions = false;
 			EnableDrawing = false;
