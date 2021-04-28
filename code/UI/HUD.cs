@@ -9,10 +9,13 @@ namespace ElementGame
 	{
 		public ElementHUD()
 		{
-			if ( IsClient )
-			{
-				RootPanel.SetTemplate( "/UI/HUD.html" );
-			}
+			if ( !IsClient )
+				return;
+
+			RootPanel.StyleSheet.Load( "/UI/HUD.scss" );
+
+			RootPanel.AddChild<WeaponInfo>();
+			RootPanel.AddChild<ChatBox>();
 		}
 	}
 
