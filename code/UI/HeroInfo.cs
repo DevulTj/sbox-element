@@ -23,7 +23,10 @@ namespace ElementGame
 			var player = Sandbox.Player.Local;
 			if ( player == null ) return;
 
-			SetClass( "active", true );
+			var weapon = player.ActiveChild as ElementWeapon;
+			var isValid = weapon != null;
+
+			SetClass( "active", isValid );
 
 			HeroName.Text = "Volt";
 		}
