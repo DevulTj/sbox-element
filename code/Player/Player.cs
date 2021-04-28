@@ -35,7 +35,8 @@ namespace ElementGame
 			EnableHideInFirstPerson = true;
 			EnableShadowInFirstPerson = true;
 
-			Inventory.Add( new Shotgun(), true );
+			Inventory.Add( new Rifle(), true );
+			Inventory.Add( new Shotgun() );
 
 			base.Respawn();
 		}
