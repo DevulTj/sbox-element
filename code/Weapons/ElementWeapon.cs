@@ -117,7 +117,7 @@ namespace ElementGame
 				//if ( ammo == 0 )
 				//	return;
 
-				AmmoClip += 1;
+				AmmoClip += ClipSize;
 			}
 		}
 
