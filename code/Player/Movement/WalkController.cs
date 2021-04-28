@@ -1,6 +1,6 @@
 using Sandbox.Internal.JsonConvert;
 using Sandbox.Rcon;
-using Sandbox;''
+using Sandbox;
 using System;
 using System.Collections.Generic;
 using System.Linq;
