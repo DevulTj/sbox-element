@@ -1,0 +1,24 @@
+{
+		"name": "Element",
+		"version": "1.0",
+		"sharedassets": "*.*",
+
+		"depends": 
+		[
+			"base",
+			"citizen",
+			"rust"
+		],
+
+		//
+		// Addons can contain multiple addons, describe them here
+		//
+		"gamemodes":
+		[
+				{
+						"name": "element",
+						"title": "Element",
+						"description": "Hero based arena shooter"
+				}
+		]
+}
