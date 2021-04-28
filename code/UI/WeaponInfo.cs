@@ -11,7 +11,7 @@ namespace ElementGame
 		public Label Weapon;
 		public Label Inventory;
 
-		public Panel Icon;
+		public Label WeaponIcon;
 
 		public WeaponInfo()
 		{
@@ -20,7 +20,7 @@ namespace ElementGame
 			TextContainer = Add.Panel( "textContainer" );
 			Weapon = TextContainer.Add.Label( "100", "weapon" );
 			Inventory = TextContainer.Add.Label( "100", "inventory" );
-			Icon = Add.Panel( "icon" );
+			WeaponIcon = Add.Label( "", "weaponIcon" );
 		}
 
 		public override void Tick()
