@@ -74,7 +74,7 @@ namespace ElementGame
 			//
 			for ( int i = 0; i < 20; i++ )
 			{
-				ShootBullet( 0.4f, 0.3f, 8.0f, 3.0f );
+				ShootBullet( 0.25f, 0.3f, 8.0f, 3.0f );
 			}
 		}
 
