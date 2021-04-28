@@ -11,7 +11,7 @@ namespace ElementGame
 		{
 			if ( IsClient )
 			{
-				RootPanel.SetTemplate( "/HUD.html" );
+				RootPanel.SetTemplate( "/UI/HUD.html" );
 			}
 		}
 	}
