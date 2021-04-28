@@ -6,6 +6,11 @@ namespace ElementGame
 {
 	partial class ElementPlayer : BasePlayer
 	{
+		public ElementPlayer()
+        {
+			Inventory = new Inventory( this );
+		}
+
 		public override void Respawn()
 		{
 			SetModel( "models/citizen/citizen.vmdl" );
@@ -30,6 +35,8 @@ namespace ElementGame
 			EnableHideInFirstPerson = true;
 			EnableShadowInFirstPerson = true;
 
+			Inventory.Add( new Shotgun(), true );
+
 			base.Respawn();
 		}
 
@@ -39,18 +46,6 @@ namespace ElementGame
 		protected override void Tick()
 		{
 			base.Tick();
-
-			//
-			// If we're running serverside and Attack1 was just pressed, spawn a ragdoll
-			//
-			if ( IsServer && Input.Pressed( InputButton.Attack1 ) )
-			{
-				var ragdoll = new ModelEntity();
-				ragdoll.SetModel( "models/citizen/citizen.vmdl" );  
-				ragdoll.WorldPos = EyePos + EyeRot.Forward * 20;
-				ragdoll.SetupPhysicsFromModel( PhysicsMotionType.Dynamic, false );
-				ragdoll.Velocity = EyeRot.Forward * 5000;
-			}
 		}
 	}
 }
