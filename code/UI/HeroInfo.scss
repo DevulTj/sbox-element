@@ -1,0 +1,31 @@
+
+heroinfo {
+    position: absolute;
+    bottom: 16px;
+    left: 64px;
+    color: #fff;
+    height: 64px;
+    width: 256px;
+    font-family: Biko;
+
+    label {
+        text-shadow: 0px 0px 20px #000;
+    }
+
+    .heroIcon {
+        width: 64px;
+        height: 64px;
+        background-image: url( /ui/hero_images/volt.png );
+        background-size: 100%;
+        background-repeat: no-repeat;
+    }
+
+    .heroName {
+        top: 10px;
+        font-size: 34px;
+        color: #ECECEC;
+        min-width: 50px;
+        text-align: right;
+        transition: color 0.2s ease;
+    }
+}

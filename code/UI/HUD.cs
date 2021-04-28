@@ -15,6 +15,7 @@ namespace ElementGame
 			RootPanel.StyleSheet.Load( "/UI/HUD.scss" );
 
 			RootPanel.AddChild<WeaponInfo>();
+			RootPanel.AddChild<HeroInfo>();
 			RootPanel.AddChild<ChatBox>();
 		}
 	}
