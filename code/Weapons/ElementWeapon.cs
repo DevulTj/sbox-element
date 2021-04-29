@@ -19,6 +19,8 @@ namespace ElementGame
 
 	partial class ElementWeapon : BaseWeapon
 	{
+		public virtual string IconPath => "/ui/weapons/rifle.png";
+
 		public virtual AmmoType AmmoType => AmmoType.Pistol;
 		public virtual int ClipSize => 16;
 		public virtual float ReloadTime => 3.0f;

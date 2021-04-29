@@ -17,6 +17,8 @@ weaponinfo {
     border-radius: 25px;
     border: 2px solid rgba(80, 80, 80, 1);
 
+    transition: all 1s ease-out;
+
     .weaponIcon {
         margin-left: 16px;
         top: 0px;

@@ -8,6 +8,7 @@ namespace ElementGame
 	partial class Rifle : ElementWeapon
 	{
 		public override string ViewModelPath => "weapons/rust_smg/v_rust_smg.vmdl";
+		public override string IconPath => "/ui/weapons/rifle.png";
 
 		public override float PrimaryRate => 15.0f;
 		public override float SecondaryRate => 1.0f;

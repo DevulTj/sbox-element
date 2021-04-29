@@ -41,6 +41,8 @@ namespace ElementGame
 				var inv = weapon.AvailableAmmo();
 				Inventory.Text = $"| {inv}";
 				Inventory.SetClass( "active", inv >= 0 );
+
+				WeaponIcon.Style.Set( "background-image", $"url( {weapon.IconPath} )" );
 			}
 			else
 			{

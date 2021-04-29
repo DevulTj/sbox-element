@@ -6,6 +6,7 @@ namespace ElementGame
 	[Library( "element_shotgun", Title = "Shotgun" )]
 	partial class Shotgun : ElementWeapon
 	{
+		public override string IconPath => "/ui/weapons/shotgun.png";
 		public override string ViewModelPath => "weapons/rust_pumpshotgun/v_rust_pumpshotgun.vmdl";
 		public override float PrimaryRate => 1;
 		public override float SecondaryRate => 1;

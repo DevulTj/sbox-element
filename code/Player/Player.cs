@@ -39,7 +39,7 @@ namespace ElementGame
 			EnableShadowInFirstPerson = true;
 
 			Inventory.Add( new Rifle(), true );
-			// Inventory.Add( new Shotgun(), true );
+			Inventory.Add( new Shotgun() );
 
 			base.Respawn();
 		}
@@ -50,6 +50,11 @@ namespace ElementGame
 		protected override void Tick()
 		{
 			base.Tick();
+
+			if ( IsServer )
+            {
+				WeaponSwitchTick();
+			}
 		}
 
 		public override void OnKilled()

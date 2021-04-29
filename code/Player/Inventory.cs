@@ -12,6 +12,9 @@ namespace ElementGame
 			// Hello!
 		}
 
+		public virtual void EquipPrimary() => SetActiveSlot( 0 );
+		public virtual void EquipSecondary() => SetActiveSlot( 1 );
+
 		public override bool Add( Entity ent, bool makeActive = false )
 		{
 			var player = Owner as ElementPlayer;
