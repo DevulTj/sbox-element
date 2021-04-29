@@ -4,4 +4,4 @@ content-src/
 code/accesslist.txt
 Properties
 codegen-*
-element-sbox.csproj
+element.csproj
