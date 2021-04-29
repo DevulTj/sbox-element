@@ -20,7 +20,7 @@ namespace ElementGame
 	partial class ElementWeapon : BaseWeapon
 	{
 		public virtual string IconPath => "/ui/weapons/rifle.png";
-
+		public override string ViewModelPath => "weapons/rust_pistol/v_rust_pistol.vmdl";
 		public virtual AmmoType AmmoType => AmmoType.Pistol;
 		public virtual int ClipSize => 16;
 		public virtual float ReloadTime => 3.0f;
@@ -58,7 +58,14 @@ namespace ElementGame
 			TimeSinceDeployed = 0;
 		}
 
-		public override string ViewModelPath => "weapons/rust_pistol/v_rust_pistol.vmdl";
+		public override void CreateHudElements()
+		{
+			if ( Hud.CurrentPanel == null ) return;
+
+			CrosshairPanel = new Crosshair();
+			CrosshairPanel.Parent = Hud.CurrentPanel;
+			CrosshairPanel.AddClass( ClassInfo.Name );
+		}
 
 		public override void Spawn()
 		{
@@ -246,15 +253,6 @@ namespace ElementGame
 			ViewModelEntity.Owner = Owner;
 			ViewModelEntity.EnableViewmodelRendering = true;
 			ViewModelEntity.SetModel( ViewModelPath );
-		}
-
-		public override void CreateHudElements()
-		{
-			if ( Hud.CurrentPanel == null ) return;
-
-			//CrosshairPanel = new Crosshair();
-			//CrosshairPanel.Parent = Hud.CurrentPanel;
-			//CrosshairPanel.AddClass( ClassInfo.Name );
 		}
 
 		public bool IsUsable()

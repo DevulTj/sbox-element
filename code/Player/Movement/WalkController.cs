@@ -35,7 +35,7 @@ namespace ElementGame
 		public float Gravity { get; set; } = 800.0f;
 		public float AirControl { get; set; } = 30.0f;
 		public bool Swimming { get; set; } = false;
-		public bool AutoJump { get; set; } = false;
+		public bool AutoJump { get; set; } = true;
 
 		public Duck Duck;
 		public Unstuck Unstuck;
