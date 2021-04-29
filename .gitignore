@@ -1,5 +1,6 @@
 .codegen/
 obj/
+content-src/
 code/accesslist.txt
 Properties
 codegen-*
