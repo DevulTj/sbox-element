@@ -1,0 +1,7 @@
+// First Sequence
+sequence 0
+loop
+frame a_circle_001.png 1
+frame a_circle_002.png 1
+frame a_circle_003.png 1
+frame a_circle_002.png 1

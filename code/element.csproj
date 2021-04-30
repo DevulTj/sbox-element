@@ -23,16 +23,20 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<Analyzer Include="E:/SteamLibrary/steamapps/common/sbox/bin/managed/Sandbox.Generator.dll"/>
-		<Reference Include="E:/SteamLibrary/steamapps/common/sbox/bin/managed/Sandbox.System.dll"/>
-		<Reference Include="E:/SteamLibrary/steamapps/common/sbox/bin/managed/Sandbox.Engine.dll"/>
-		<Reference Include="E:/SteamLibrary/steamapps/common/sbox/bin/managed/Sandbox.Game.dll"/>
-		<Reference Include="E:/SteamLibrary/steamapps/common/sbox/bin/managed/Sandbox.Hotload.dll"/>
+		<Analyzer Include="E:/SteamLibrary/steamapps/common/sbox/bin/managed/Sandbox.Generator.dll" />
+		<Reference Include="E:/SteamLibrary/steamapps/common/sbox/bin/managed/Sandbox.System.dll" />
+		<Reference Include="E:/SteamLibrary/steamapps/common/sbox/bin/managed/Sandbox.Engine.dll" />
+		<Reference Include="E:/SteamLibrary/steamapps/common/sbox/bin/managed/Sandbox.Game.dll" />
+		<Reference Include="E:/SteamLibrary/steamapps/common/sbox/bin/managed/Sandbox.Hotload.dll" />
 	</ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="E:\SteamLibrary\steamapps\common\sbox\addons\base\code\base.csproj"></ProjectReference>
 
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Player\Movement\" />
   </ItemGroup>
 
 </Project>

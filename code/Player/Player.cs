@@ -64,9 +64,7 @@ namespace ElementGame
 						.Run();
 
 					var entity = new JumpPad();
-					entity.SetModel( "models/rust_props/tires/tire_a.vmdl" );
 					entity.WorldPos = tr.EndPos;
-					entity.SetupPhysicsFromModel( PhysicsMotionType.Dynamic, false );
 				}
 			}
 		}
