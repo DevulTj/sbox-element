@@ -1,27 +1,34 @@
-using Sandbox.Internal.JsonConvert;
-using Sandbox.Rcon;
 using Sandbox;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace ElementGame
 {
 	public struct Impulse
-    {
-        public Vector3 Direction;
+	{
+		public Vector3 Direction;
 		public bool LiftPlayer;
 
-        public Impulse( Vector3 impulse, bool shouldLiftPlayer ) : this()
-        {
-            Direction = impulse;
+		public Impulse( Vector3 impulse, bool shouldLiftPlayer ) : this()
+		{
+			Direction = impulse;
 			LiftPlayer = shouldLiftPlayer;
-        }
-    }
+		}
+	}
+
+	public struct AdditionalJump
+	{
+		public float DirectionalPower;
+		public bool ResetVelocity;
+		public float ModifiedJumpPower;
+
+		public AdditionalJump( float directionalPower, bool resetVelocity, float modifiedJumpPower ) : this()
+		{
+			DirectionalPower = directionalPower;
+			ResetVelocity = resetVelocity;
+			ModifiedJumpPower = modifiedJumpPower;
+		}
+	}
 
 	[Library]
 	public class WalkController : BasePlayerController
@@ -49,15 +56,27 @@ namespace ElementGame
 		public bool Swimming { get; set; } = false;
 		public bool AutoJump { get; set; } = true;
 
+		public float JumpPower { get; set; } = 256f;
+
 		public Duck Duck;
 		public Unstuck Unstuck;
 
 		public int AllowedJumps = 0;
+		List<AdditionalJump> AllowedJumpsInfo = new();
 
 		public WalkController()
 		{
 			Duck = new Duck( this );
 			Unstuck = new Unstuck( this );
+		}
+
+		internal void ExtraJump( bool resetVelocity, float directionalPower = 0f, float modifiedJumpPower = 0f )
+		{
+			if ( modifiedJumpPower == 0f )
+				modifiedJumpPower = JumpPower;
+
+			AllowedJumpsInfo.Add( new( directionalPower, resetVelocity, modifiedJumpPower ) );
+			AllowedJumps++;
 		}
 
 		/// <summary>
@@ -74,7 +93,7 @@ namespace ElementGame
 
 		List<Impulse> ImpulseList = new();
 
-		public void QueueImpulse( Vector3 impulse, bool shouldLiftPlayer = false ) 
+		public void QueueImpulse( Vector3 impulse, bool shouldLiftPlayer = false )
 			=> ImpulseList.Add( new( impulse, shouldLiftPlayer ) );
 
 		public void QueueImpulseAdditive( Vector3 impulse, bool shouldLiftPlayer = false )
@@ -178,14 +197,14 @@ namespace ElementGame
 			}
 
 			if ( ImpulseList.Count > 0 )
-            {
+			{
 				Velocity = Vector3.Zero;
 
 				bool hasLifted = false;
 				ImpulseList.ForEach( x =>
 				{
 					if ( x.LiftPlayer && !hasLifted )
-                    {
+					{
 						hasLifted = true;
 
 						ClearGroundEntity();
@@ -197,7 +216,7 @@ namespace ElementGame
 
 				// Clear the list after we've done processing
 				ImpulseList.Clear();
-            }
+			}
 
 			// Fricion is handled before we add in any base velocity. That way, if we are on a conveyor, 
 			//  we don't slow when standing still, relative to the conveyor.
@@ -537,41 +556,43 @@ namespace ElementGame
 			if ( GroundEntity == null && AllowedJumps < 1 )
 				return;
 
+			// This code makes me wanna kms
+			var resetVelocity = false;
+			var jumpDirectionalPower = 0f;
+			var usedJumpPower = JumpPower;
 			if ( AllowedJumps > 0 )
+			{
+				var index = AllowedJumps - 1;
+				var jumpInfo = AllowedJumpsInfo[ index ];
+
+				resetVelocity = jumpInfo.ResetVelocity;
+				jumpDirectionalPower = jumpInfo.DirectionalPower;
+
+				if ( jumpInfo.ModifiedJumpPower > 0f )
+				{
+					usedJumpPower = jumpInfo.ModifiedJumpPower;
+				}
+
+				AllowedJumpsInfo.RemoveAt( index );
 				AllowedJumps--;
+			}
 
 			/*
 			if ( player->m_Local.m_bDucking && (player->GetFlags() & FL_DUCKING) )
 				return false;
 			*/
 
-				/*
-				// Still updating the eye position.
-				if ( player->m_Local.m_nDuckJumpTimeMsecs > 0u )
-					return false;
-				*/
+			/*
+			// Still updating the eye position.
+			if ( player->m_Local.m_nDuckJumpTimeMsecs > 0u )
+				return false;
+			*/
 
 			ClearGroundEntity();
 
-			// player->PlayStepSound( (Vector &)mv->GetAbsOrigin(), player->m_pSurfaceData, 1.0, true );
 
-			// MoveHelper()->PlayerSetAnimation( PLAYER_JUMP );
-
-			float flGroundFactor = 1.0f;
-			//if ( player->m_pSurfaceData )
-			{
-				//   flGroundFactor = g_pPhysicsQuery->GetGameSurfaceproperties( player->m_pSurfaceData )->m_flJumpFactor;
-			}
-
-			float flMul = 268.3281572999747f * 1.2f;
-
-			float startz = 0;
-
-			if ( Duck.IsActive )
-				flMul *= 0.8f;
-
-			Velocity = Velocity.WithZ( startz + flMul * flGroundFactor );
-
+			Velocity = Velocity.WithZ( 0f );
+			Velocity = resetVelocity ? new Vector3( 0, 0, usedJumpPower ) + ( WishVelocity.Normal * jumpDirectionalPower ) : Velocity.WithZ( usedJumpPower );
 			Velocity -= new Vector3( 0, 0, Gravity * 0.5f ) * Time.Delta;
 
 			// mv->m_outJumpVel.z += mv->m_vecVelocity[2] - startz;

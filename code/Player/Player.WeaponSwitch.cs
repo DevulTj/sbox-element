@@ -1,7 +1,5 @@
 using Sandbox;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ElementGame
 {
@@ -17,26 +15,26 @@ namespace ElementGame
 		};
 
 		protected int GetSlotIndex( InputButton bind )
-        {
+		{
 			if ( KeyMap.TryGetValue( bind, out var val ) )
-            {
+			{
 				return val;
-            }
+			}
 
 			return 0;
 		}
 
 		protected void ChangeWeapon( InputButton bind )
-        {
+		{
 			int index = GetSlotIndex( bind );
 			if ( index < 1 )
 				return;
 
 			Inventory.SetActiveSlot( index - 1, true );
-        }
+		}
 
 		protected void WeaponSwitchTick()
-        {
+		{
 			if ( Input.Pressed( InputButton.Slot0 ) )
 				ChangeWeapon( InputButton.Slot0 );
 			else if ( Input.Pressed( InputButton.Slot1 ) )

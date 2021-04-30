@@ -1,6 +1,4 @@
 ﻿using Sandbox;
-using System;
-using System.Linq;
 
 namespace ElementGame
 {
@@ -10,7 +8,7 @@ namespace ElementGame
 		public DamageInfo LastDamage { get; protected set; }
 
 		public ElementPlayer()
-        {
+		{
 			Inventory = new Inventory( this );
 		}
 
@@ -54,11 +52,11 @@ namespace ElementGame
 			base.Tick();
 
 			if ( IsServer )
-            {
+			{
 				WeaponSwitchTick();
 
-				if (Input.Pressed(InputButton.Flashlight))
-                {
+				if ( Input.Pressed( InputButton.Flashlight ) )
+				{
 					var tr = Trace.Ray( EyePos, EyePos + EyeRot.Forward * 4096 )
 						.Ignore( this )
 						.Run();
@@ -95,20 +93,20 @@ namespace ElementGame
 
 
 		public override void TakeDamage( DamageInfo info )
-        {
+		{
 			LastDamage = info;
 
 			base.TakeDamage( info );
-        }
+		}
 
 		public override void StartTouch( Entity other )
-        {
+		{
 			base.StartTouch( other );
 		}
 
 		[ClientRpc]
 		public void JustHitJumpPad( Entity jumpPad )
-        {
+		{
 			Host.AssertClient();
 
 			if ( this == Local )

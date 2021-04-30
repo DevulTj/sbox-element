@@ -1,14 +1,9 @@
 
 using Sandbox;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ElementGame
 {
-	
+
 
 	[Library( "element_jumppad" )]
 	public partial class JumpPad : ModelEntity
@@ -19,14 +14,14 @@ namespace ElementGame
 		public virtual float JumpPowerForwardDucked => 768f;
 
 		public JumpPad()
-        {
+		{
 
 			var state = Host.IsServer ? "SERVER" : "CLIENT";
 
 			Log.Info( $"[{state}] Spawning jump pad" );
 
 			if ( Host.IsClient )
-            {
+			{
 				var particle = Particles.Create( "particles/green_circle_teleporter.vpcf", this, "Base", true );
 				Log.Info( particle.ToString() );
 			}
@@ -49,7 +44,7 @@ namespace ElementGame
 		}
 
 		public override void StartTouch( Entity other )
-        {
+		{
 			base.StartTouch( other );
 
 			if ( IsClient ) return;
@@ -57,21 +52,18 @@ namespace ElementGame
 			if ( other is Player player )
 			{
 				if ( player.GetActiveController() is WalkController controller )
-                {
-					Vector3 directionNormalized = controller.Velocity.Normal;
+				{
+					var directionNormalized = controller.Velocity.Normal;
+					var duck = controller.Duck.IsActive;
+					var jumpPowerForward = duck ? JumpPowerForwardDucked : JumpPowerForward;
+					var jumpPowerUp = duck ? JumpPowerUpDucked : JumpPowerUp;
 
-					if ( controller.Duck.IsActive )
-                    {
-						controller.QueueImpulse( directionNormalized * JumpPowerForwardDucked + controller.Rot.Up * JumpPowerUpDucked, true );
-					}
-					else
-                    {
-						controller.QueueImpulse( directionNormalized * JumpPowerForward + controller.Rot.Up * JumpPowerUp, true );
-					}
-
-					controller.AllowedJumps++;
+					// Queue an impulse for when the movement controller can process it
+					controller.QueueImpulse( directionNormalized * jumpPowerForward + controller.Rot.Up * jumpPowerUp, true );
+					// Allow the player to jump again
+					controller.ExtraJump( true, 300f, 368f );
 				}
-            }
-        }
+			}
+		}
 	}
 }

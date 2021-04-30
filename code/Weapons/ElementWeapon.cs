@@ -1,21 +1,14 @@
 using Sandbox;
-using Sandbox.UI;
-using Sandbox.UI.Construct;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Threading.Tasks;
 
 namespace ElementGame
 {
 	public enum AmmoType
-    {
+	{
 		Pistol,
 		Rifle,
 		Shotgun,
 		RocketLauncher
-    }
+	}
 
 	partial class ElementWeapon : BaseWeapon
 	{
