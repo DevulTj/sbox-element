@@ -56,6 +56,8 @@ namespace ElementGame
 					controller.QueueImpulse( directionNormalized * jumpPowerForward + controller.Rot.Up * jumpPowerUp, true );
 					// Allow the player to jump again
 					controller.ExtraJump( true, 300f, 368f );
+
+					PlaySound( "jumppad" );
 				}
 			}
 		}
