@@ -912,6 +912,13 @@ namespace ElementGame
 
 			if ( GroundEntity != null )
 			{
+				// Clear jumps
+				if ( wasOffGround && AllowedJumps > 0 )
+				{
+					AllowedJumps = 0;
+					AllowedJumpsInfo.Clear();
+				}
+
 				BaseVelocity = GroundEntity.Velocity;
 			}
 
