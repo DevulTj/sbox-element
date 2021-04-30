@@ -52,6 +52,7 @@ namespace ElementGame
 		public Duck Duck;
 		public Unstuck Unstuck;
 
+		public int AllowedJumps = 0;
 
 		public WalkController()
 		{
@@ -533,19 +534,22 @@ namespace ElementGame
 				return;
 			}
 
-			if ( GroundEntity == null )
+			if ( GroundEntity == null && AllowedJumps < 1 )
 				return;
+
+			if ( AllowedJumps > 0 )
+				AllowedJumps--;
 
 			/*
 			if ( player->m_Local.m_bDucking && (player->GetFlags() & FL_DUCKING) )
 				return false;
 			*/
 
-			/*
-			// Still updating the eye position.
-			if ( player->m_Local.m_nDuckJumpTimeMsecs > 0u )
-				return false;
-			*/
+				/*
+				// Still updating the eye position.
+				if ( player->m_Local.m_nDuckJumpTimeMsecs > 0u )
+					return false;
+				*/
 
 			ClearGroundEntity();
 
@@ -561,7 +565,7 @@ namespace ElementGame
 
 			float flMul = 268.3281572999747f * 1.2f;
 
-			float startz = Velocity.z;
+			float startz = 0;
 
 			if ( Duck.IsActive )
 				flMul *= 0.8f;

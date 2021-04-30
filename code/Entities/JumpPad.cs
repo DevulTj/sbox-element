@@ -20,20 +20,25 @@ namespace ElementGame
 
 		public JumpPad()
         {
-			var particle = Particles.Create( "particles/green_circle_teleporter.vpcf", this, "Base", true );
+
+			var state = Host.IsServer ? "SERVER" : "CLIENT";
+
+			Log.Info( $"[{state}] Spawning jump pad" );
+
+			if ( Host.IsClient )
+            {
+				var particle = Particles.Create( "particles/green_circle_teleporter.vpcf", this, "Base", true );
+				Log.Info( particle.ToString() );
+			}
+
+
 		}
 
 		public override void Spawn()
 		{
 			base.Spawn();
 
-			var state = Host.IsServer ? "SERVER" : "CLIENT";
-
-			Log.Info( $"[{state}] Spawning jump pad" );
-
 			SetModel( "models/props/jumppadlow.vmdl" );
-
-			
 
 			SetupPhysicsFromCapsule( PhysicsMotionType.Keyframed, new Capsule( Vector3.Zero, Vector3.One * 0.1f, 16f ) );
 
@@ -63,6 +68,8 @@ namespace ElementGame
                     {
 						controller.QueueImpulse( directionNormalized * JumpPowerForward + controller.Rot.Up * JumpPowerUp, true );
 					}
+
+					controller.AllowedJumps++;
 				}
             }
         }
