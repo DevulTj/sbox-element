@@ -14,7 +14,9 @@ namespace ElementGame
 		public JumpPad()
 		{
 			if ( Host.IsClient )
+			{
 				Particles.Create( "particles/green_circle_teleporter.vpcf", this, "Base", true );
+			}
 		}
 
 		public override void Spawn()
@@ -34,7 +36,10 @@ namespace ElementGame
 		{
 			base.StartTouch( other );
 
-			if ( IsClient ) return;
+			if ( IsClient )
+			{
+				return;
+			}
 
 			if ( other is Player player )
 			{
