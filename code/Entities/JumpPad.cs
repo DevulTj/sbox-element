@@ -11,11 +11,13 @@ namespace ElementGame
 		public virtual float JumpPowerForward => 400f;
 		public virtual float JumpPowerForwardDucked => 768f;
 
+		protected Particles Effect;
+
 		public JumpPad()
 		{
 			if ( Host.IsClient )
 			{
-				Particles.Create( "particles/green_circle_teleporter.vpcf", this, "Base", true );
+				Effect = Particles.Create( "particles/green_circle_teleporter.vpcf", this, "Base", true );
 			}
 		}
 
