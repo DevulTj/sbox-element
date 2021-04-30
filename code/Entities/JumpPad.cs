@@ -3,8 +3,6 @@ using Sandbox;
 
 namespace ElementGame
 {
-
-
 	[Library( "element_jumppad" )]
 	public partial class JumpPad : ModelEntity
 	{
@@ -15,18 +13,8 @@ namespace ElementGame
 
 		public JumpPad()
 		{
-
-			var state = Host.IsServer ? "SERVER" : "CLIENT";
-
-			Log.Info( $"[{state}] Spawning jump pad" );
-
 			if ( Host.IsClient )
-			{
-				var particle = Particles.Create( "particles/green_circle_teleporter.vpcf", this, "Base", true );
-				Log.Info( particle.ToString() );
-			}
-
-
+				Particles.Create( "particles/green_circle_teleporter.vpcf", this, "Base", true );
 		}
 
 		public override void Spawn()
@@ -34,7 +22,6 @@ namespace ElementGame
 			base.Spawn();
 
 			SetModel( "models/props/jumppadlow.vmdl" );
-
 			SetupPhysicsFromCapsule( PhysicsMotionType.Keyframed, new Capsule( Vector3.Zero, Vector3.One * 0.1f, 16f ) );
 
 			Transmit = TransmitType.Default;
