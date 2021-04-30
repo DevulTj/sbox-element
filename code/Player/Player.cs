@@ -18,6 +18,8 @@ namespace ElementGame
 		{
 			SetModel( "models/citizen/citizen.vmdl" );
 
+			EnableTouch = true;
+
 			//
 			// Use WalkController for movement (you can make your own PlayerController for 100% control)
 			//
@@ -54,6 +56,18 @@ namespace ElementGame
 			if ( IsServer )
             {
 				WeaponSwitchTick();
+
+				if (Input.Pressed(InputButton.Flashlight))
+                {
+					var tr = Trace.Ray( EyePos, EyePos + EyeRot.Forward * 4096 )
+						.Ignore( this )
+						.Run();
+
+					var entity = new JumpPad();
+					entity.SetModel( "models/rust_props/tires/tire_a.vmdl" );
+					entity.WorldPos = tr.EndPos;
+					entity.SetupPhysicsFromModel( PhysicsMotionType.Dynamic, false );
+				}
 			}
 		}
 
@@ -88,5 +102,21 @@ namespace ElementGame
 
 			base.TakeDamage( info );
         }
+
+		public override void StartTouch( Entity other )
+        {
+			base.StartTouch( other );
+		}
+
+		[ClientRpc]
+		public void JustHitJumpPad( Entity jumpPad )
+        {
+			Host.AssertClient();
+
+			if ( this == Local )
+			{
+				_ = new Sandbox.ScreenShake.Perlin();
+			}
+		}
 	}
 }

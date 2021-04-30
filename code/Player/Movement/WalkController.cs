@@ -93,6 +93,9 @@ namespace ElementGame
 
 		protected float SurfaceFriction;
 
+
+		public JumpPad JumpPadEntity;
+
 		public override void Tick()
 		{
 			ViewOffset = Vector3.Up * ( EyeHeight * Player.WorldScale );
@@ -155,6 +158,28 @@ namespace ElementGame
 			if ( AutoJump ? Input.Down( InputButton.Jump ) : Input.Pressed( InputButton.Jump ) )
 			{
 				CheckJumpButton();
+			}
+
+			if ( JumpPadEntity != null )
+            {
+                ClearGroundEntity();
+
+                float startZ = Velocity.z;
+                // TODO - change this
+                float groundFactor = 1f;
+
+
+                Velocity = Velocity.WithZ( startZ + 1000f * groundFactor );
+                AddEvent( "jump" );
+
+				if ( Host.IsServer )
+                {
+					var player = Player as ElementPlayer;
+
+					player.JustHitJumpPad( player, JumpPadEntity );
+				}
+
+				JumpPadEntity = null;
 			}
 
 			// Fricion is handled before we add in any base velocity. That way, if we are on a conveyor, 
