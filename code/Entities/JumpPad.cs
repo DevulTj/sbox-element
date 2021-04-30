@@ -11,7 +11,7 @@ namespace ElementGame
 	[Library( "element_jumppad" )]
 	public partial class JumpPad : ModelEntity
 	{
-		public virtual float JumpPower => 4096;
+		public virtual float JumpPower => 512;
 
 		public override void Spawn()
 		{
@@ -34,7 +34,7 @@ namespace ElementGame
 			{
 				if ( player.GetActiveController() is WalkController controller )
                 {
-					controller.JumpPadEntity = this;
+					controller.QueueImpulse( controller.Velocity + ( Vector3.Up * JumpPower ), true );
 					//controller.ClearGroundEntity();
 
 					//float startZ = Velocity.z;

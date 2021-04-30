@@ -11,6 +11,18 @@ using System.Threading.Tasks;
 
 namespace ElementGame
 {
+	public struct Impulse
+    {
+        public Vector3 Direction;
+		public bool LiftPlayer;
+
+        public Impulse( Vector3 impulse, bool shouldLiftPlayer ) : this()
+        {
+            Direction = impulse;
+			LiftPlayer = shouldLiftPlayer;
+        }
+    }
+
 	[Library]
 	public class WalkController : BasePlayerController
 	{
@@ -59,6 +71,10 @@ namespace ElementGame
 			return new BBox( mins, maxs );
 		}
 
+		List<Impulse> ImpulseList = new();
+
+		public void QueueImpulse( Vector3 impulse, bool shouldLiftPlayer = false ) 
+			=> ImpulseList.Add( new( impulse, shouldLiftPlayer ) );
 
 		// Duck body height 32
 		// Eye Height 64
@@ -92,9 +108,6 @@ namespace ElementGame
 		}
 
 		protected float SurfaceFriction;
-
-
-		public JumpPad JumpPadEntity;
 
 		public override void Tick()
 		{
@@ -160,27 +173,27 @@ namespace ElementGame
 				CheckJumpButton();
 			}
 
-			if ( JumpPadEntity != null )
+			if ( ImpulseList.Count > 0 )
             {
-                ClearGroundEntity();
+				Velocity = Vector3.Zero;
 
-                float startZ = Velocity.z;
-                // TODO - change this
-                float groundFactor = 1f;
+				bool hasLifted = false;
+				ImpulseList.ForEach( x =>
+				{
+					if ( x.LiftPlayer && !hasLifted )
+                    {
+						hasLifted = true;
 
+						ClearGroundEntity();
+						AddEvent( "jump" );
+					}
 
-                Velocity = Velocity.WithZ( startZ + 1000f * groundFactor );
-                AddEvent( "jump" );
+					Velocity += x.Direction;
+				} );
 
-				if ( Host.IsServer )
-                {
-					var player = Player as ElementPlayer;
-
-					player.JustHitJumpPad( player, JumpPadEntity );
-				}
-
-				JumpPadEntity = null;
-			}
+				// Clear the list after we've done processing
+				ImpulseList.Clear();
+            }
 
 			// Fricion is handled before we add in any base velocity. That way, if we are on a conveyor, 
 			//  we don't slow when standing still, relative to the conveyor.
