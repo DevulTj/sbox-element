@@ -76,6 +76,9 @@ namespace ElementGame
 		public void QueueImpulse( Vector3 impulse, bool shouldLiftPlayer = false ) 
 			=> ImpulseList.Add( new( impulse, shouldLiftPlayer ) );
 
+		public void QueueImpulseAdditive( Vector3 impulse, bool shouldLiftPlayer = false )
+			=> ImpulseList.Add( new( Velocity + impulse, shouldLiftPlayer ) );
+
 		// Duck body height 32
 		// Eye Height 64
 		// Duck Eye Height 28

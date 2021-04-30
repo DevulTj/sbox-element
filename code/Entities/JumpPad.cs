@@ -8,10 +8,15 @@ using System.Threading.Tasks;
 
 namespace ElementGame
 {
+	
+
 	[Library( "element_jumppad" )]
 	public partial class JumpPad : ModelEntity
 	{
-		public virtual float JumpPower => 512;
+		public virtual float JumpPowerUp => 700f;
+		public virtual float JumpPowerUpDucked => 550f;
+		public virtual float JumpPowerForward => 400f;
+		public virtual float JumpPowerForwardDucked => 768f;
 
 		public override void Spawn()
 		{
@@ -34,17 +39,16 @@ namespace ElementGame
 			{
 				if ( player.GetActiveController() is WalkController controller )
                 {
-					controller.QueueImpulse( controller.Velocity + ( Vector3.Up * JumpPower ), true );
-					//controller.ClearGroundEntity();
+					Vector3 directionNormalized = controller.Velocity.Normal;
 
-					//float startZ = Velocity.z;
-					//// TODO - change this
-					//float groundFactor = 1f;
-
-					//Log.Error( "Jump" );
-
-					//controller.Velocity = controller.Velocity.WithZ( startZ + JumpPower * groundFactor );
-					//controller.AddEvent( "jump" );
+					if ( controller.Duck.IsActive )
+                    {
+						controller.QueueImpulse( directionNormalized * JumpPowerForwardDucked + controller.Rot.Up * JumpPowerUpDucked, true );
+					}
+					else
+                    {
+						controller.QueueImpulse( directionNormalized * JumpPowerForward + controller.Rot.Up * JumpPowerUp, true );
+					}
 				}
             }
         }
