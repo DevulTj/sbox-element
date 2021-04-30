@@ -28,6 +28,9 @@ namespace ElementGame
 		public virtual int BucketWeight => 100;
 		public virtual bool UnlimitedAmmo => false;
 
+		public virtual bool HasIronSights => false;
+		public virtual Vector3 IronSightsOffset => new Vector3( 0f, 0f, 0f );
+
 		[NetPredicted]
 		public int AmmoClip { get; set; }
 
@@ -248,11 +251,14 @@ namespace ElementGame
 			if ( string.IsNullOrEmpty( ViewModelPath ) )
 				return;
 
-			ViewModelEntity = new ElementViewModel();
-			ViewModelEntity.WorldPos = WorldPos;
-			ViewModelEntity.Owner = Owner;
-			ViewModelEntity.EnableViewmodelRendering = true;
-			ViewModelEntity.SetModel( ViewModelPath );
+			var viewModel = new ElementViewModel();
+
+			ViewModelEntity = viewModel;
+			viewModel.WorldPos = WorldPos;
+			viewModel.Owner = Owner;
+			viewModel.EnableViewmodelRendering = true;
+			viewModel.SetModel( ViewModelPath );
+			viewModel.SetWeapon( this );
 		}
 
 		public bool IsUsable()
