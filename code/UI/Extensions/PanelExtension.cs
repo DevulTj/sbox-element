@@ -12,7 +12,7 @@ namespace Sandbox.UI
 			if ( !player.IsValid() ) return;
 
 			var eyePos = player.EyePos;
-			var eyeRot = player.EyeRot;
+			var eyeRot = player.GetActiveCamera().Rot;
 
 			var tr = Trace.Ray( eyePos, eyePos + eyeRot.Forward * 1000 )
 							.Size( 1.0f )

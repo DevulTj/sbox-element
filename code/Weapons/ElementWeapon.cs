@@ -177,7 +177,8 @@ namespace ElementGame
 
 			if ( Owner == Player.Local )
 			{
-				new Sandbox.ScreenShake.Perlin();
+				// new Sandbox.ScreenShake.Perlin();
+				Owner.GetActiveCamera().Rot *= Rotation.FromAxis( Vector3.Right, 1f );
 			}
 
 			ViewModelEntity?.SetAnimParam( "fire", true );
@@ -189,7 +190,7 @@ namespace ElementGame
 		/// </summary>
 		public virtual void ShootBullet( float spread, float force, float damage, float bulletSize )
 		{
-			var forward = Owner.EyeRot.Forward;
+			var forward = Owner.GetActiveCamera().Rot.Forward;
 			forward += ( Vector3.Random + Vector3.Random + Vector3.Random + Vector3.Random ) * spread * 0.25f;
 			forward = forward.Normal;
 

@@ -1,42 +1,46 @@
 using Sandbox;
 using Sandbox.UI;
+using System;
 
 namespace ElementGame.ScreenShake
 {
 	public class BasicRecoil : CameraModifier
 	{
-		float MinAmount;
-		float MaxAmount;
-		float RecoveryTime;
+		float Angle;
+		float TimeLength;
 
 		TimeSince lifeTime = 0;
-		float pos = 0;
 
-		public BasicRecoil( float minAmount = 0.1f, float maxAmount = 0.2f, float recoveryTime = 1.0f )
+		BaseViewModel ViewModelRef;
+
+		float Speed = 10f;
+
+		Rotation LastRot;
+
+		public BasicRecoil( BaseViewModel vm = null, float angle = -3f, float time = 0.6f )
 		{
-			MinAmount = minAmount;
-			MaxAmount = maxAmount;
-			RecoveryTime = recoveryTime;
+			ViewModelRef = vm;
+
+			Angle = Rand.Float( angle * 0.5f, angle );
+			TimeLength = time;
 		}
 
 		public override bool Update( Camera cam )
 		{
-			//var delta = ( (float)lifeTime ).LerpInverse( 0, RecoveryTime, true );
-			//delta = Easing.EaseOut( delta );
-			//var invdelta = 1 - delta;
+			var delta = ( (float)lifeTime ).LerpInverse( 0, TimeLength, true );
+			delta = (float)Math.Sin( (float)Math.PI * delta ) + 1f;
 
-			//pos += Time.Delta * 10 * invdelta * Speed;
+			var invdelta = 1 - delta;
 
-			//float x = Noise.Perlin( pos, 0, NoiseZ );
-			//float y = Noise.Perlin( pos, 3.0f, NoiseZ );
+			// Vector3 mouseDelta = ViewModelRef.Owner.Input.MouseDelta;
 
-			//cam.Pos += ( cam.Rot.Right * x + cam.Rot.Up * y ) * invdelta * Size;
-			//cam.Rot *= Rotation.FromAxis( Vector3.Up, x * Size * invdelta * RotationAmount );
-			//cam.Rot *= Rotation.FromAxis( Vector3.Right, y * Size * invdelta * RotationAmount );
+			if ( ViewModelRef != null )
+			{
+				ViewModelRef.WorldRot *= Rotation.FromAxis( Vector3.Right, Angle * invdelta );
+				cam.Rot *= Rotation.FromAxis( Vector3.Right, ( Angle / 2 ) * invdelta );
+			}
 
-			//return lifeTime < Length;
-
-			return false;
+			return lifeTime < TimeLength;
 		}
 	}
 }
