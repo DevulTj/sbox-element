@@ -43,7 +43,7 @@ namespace ElementGame
 				return;
 			}
 
-			if ( other is Player player )
+			if ( other is ElementPlayer player )
 			{
 				if ( player.GetActiveController() is WalkController controller )
 				{
@@ -58,6 +58,8 @@ namespace ElementGame
 					controller.ExtraJump( true, 300f, 368f );
 
 					PlaySound( "jumppad" );
+
+					player.JustHitJumpPad( player );
 				}
 			}
 		}

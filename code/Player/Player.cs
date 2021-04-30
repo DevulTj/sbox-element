@@ -109,10 +109,7 @@ namespace ElementGame
 		{
 			Host.AssertClient();
 
-			if ( this == Local )
-			{
-				_ = new Sandbox.ScreenShake.Perlin();
-			}
+			new ViewPunch.Vertical( 10f, 0.6f );
 		}
 	}
 }
