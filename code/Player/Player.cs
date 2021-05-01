@@ -2,7 +2,7 @@
 
 namespace ElementGame
 {
-	partial class ElementPlayer : BasePlayer
+	public partial class ElementPlayer : BasePlayer
 	{
 		[NetLocal]
 		public DamageInfo LastDamage { get; protected set; }
@@ -65,7 +65,7 @@ namespace ElementGame
 						.Ignore( this )
 						.Run();
 
-					var entity = new JumpPad();
+					var entity = new AmmoPickup();
 					entity.WorldPos = tr.EndPos;
 				}
 			}
