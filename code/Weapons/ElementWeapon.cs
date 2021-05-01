@@ -7,7 +7,9 @@ namespace ElementGame
 		Pistol,
 		Rifle,
 		Shotgun,
-		RocketLauncher
+		RocketLauncher,
+
+		Max
 	}
 
 	partial class ElementWeapon : BaseWeapon
@@ -41,7 +43,7 @@ namespace ElementGame
 		{
 			var owner = Owner as ElementPlayer;
 			if ( owner == null ) return 0;
-			return 16; //owner.AmmoCount( AmmoType );
+			return owner.AmmoCount( AmmoType );
 		}
 
 		public override void ActiveStart( Entity ent )
@@ -83,8 +85,8 @@ namespace ElementGame
 
 			if ( Owner is ElementPlayer player )
 			{
-				//if ( player.AmmoCount( AmmoType ) <= 0 )
-				//	return;
+				if ( player.AmmoCount( AmmoType ) <= 0 )
+					return;
 
 				StartReloadEffects();
 			}
@@ -116,11 +118,11 @@ namespace ElementGame
 
 			if ( Owner is ElementPlayer player )
 			{
-				//var ammo = player.TakeAmmo( AmmoType, ClipSize - AmmoClip );
-				//if ( ammo == 0 )
-				//	return;
+				var ammo = player.TakeAmmo( AmmoType, ClipSize - AmmoClip );
+				if ( ammo == 0 )
+					return;
 
-				AmmoClip += ClipSize;
+				AmmoClip += ammo;
 			}
 		}
 

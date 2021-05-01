@@ -41,6 +41,10 @@ namespace ElementGame
 			Inventory.Add( new Rifle(), true );
 			Inventory.Add( new Shotgun() );
 
+			GiveAmmo( AmmoType.Rifle, 60 );
+			GiveAmmo( AmmoType.Pistol, 40 );
+			GiveAmmo( AmmoType.Shotgun, 8 );
+
 			base.Respawn();
 		}
 
