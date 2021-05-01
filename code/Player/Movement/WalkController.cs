@@ -902,6 +902,12 @@ namespace ElementGame
 
 		}
 
+		protected virtual void OnPlayerLanded()
+		{
+			// Allow the player to slide when they land
+			Slide.Reset();
+		}
+
 		/// <summary>
 		/// We have a new ground entity
 		/// </summary>
@@ -921,6 +927,11 @@ namespace ElementGame
 			if ( GroundEntity != null ) oldGroundVelocity = GroundEntity.Velocity;
 
 			bool wasOffGround = GroundEntity == null;
+
+			if ( wasOffGround )
+			{
+				OnPlayerLanded();
+			}
 
 			GroundEntity = tr.Entity;
 

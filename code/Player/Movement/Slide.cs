@@ -28,6 +28,11 @@ namespace ElementGame
 			Controller = controller;
 		}
 
+		public void Reset()
+		{
+			Activated = Cooldown;
+		}
+
 		public virtual void PreTick()
 		{
 			bool isDown = Controller.Input.Down( InputButton.Duck ) && Controller.Input.Down( InputButton.Run );
@@ -38,11 +43,11 @@ namespace ElementGame
 			if ( Controller.Velocity.Length <= MinimumSpeed )
 				StopTry();
 
-			if ( oldWish == Wish )
-				return;
-
-			//// No sliding while you're already in the sky
+			// No sliding while you're already in the sky
 			if ( Controller.GroundEntity == null )
+				StopTry();
+
+			if ( oldWish == Wish )
 				return;
 
 			if ( isDown != IsActive )
