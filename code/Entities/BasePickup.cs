@@ -34,7 +34,7 @@ namespace ElementGame
 			if ( Effect != null )
 				return;
 
-			Effect = Particles.Create( "particles/green_circle_teleporter.vpcf", this, "Base", true );
+			Effect = Particles.Create( "particles/ammo_pad.vpcf", this, "Base", true );
 		}
 
 		public virtual void OnPickupActivated( ElementPlayer player )
