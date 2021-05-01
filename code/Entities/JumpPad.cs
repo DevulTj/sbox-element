@@ -11,14 +11,11 @@ namespace ElementGame
 		public virtual float JumpPowerForward => 400f;
 		public virtual float JumpPowerForwardDucked => 768f;
 
-		protected Particles Effect;
+		public Particles Effect { get; set; }
 
 		public JumpPad()
 		{
-			if ( Host.IsClient )
-			{
-				Effect = Particles.Create( "particles/green_circle_teleporter.vpcf", this, "Base", true );
-			}
+
 		}
 
 		public override void Spawn()
@@ -32,6 +29,14 @@ namespace ElementGame
 			EnableTouch = true;
 			CollisionGroup = CollisionGroup.Trigger;
 			PhysicsEnabled = false;
+		}
+
+		public override void OnNewModel( Model model )
+		{
+			if ( Effect != null )
+				return;
+
+			Effect = Particles.Create( "particles/green_circle_teleporter.vpcf", this, "Base", true );
 		}
 
 		public override void StartTouch( Entity other )
