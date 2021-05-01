@@ -123,8 +123,11 @@ namespace ElementGame
 		{
 			Host.AssertClient();
 
-			new ViewPunch.Vertical( 10f, 0.6f );
-			new ViewPunch.FOVImpact( -15f, 2f );
+			if ( this == Local )
+			{
+				new ViewPunch.Vertical( 10f, 0.6f );
+				new ViewPunch.FOVImpact( -15f, 2f );
+			}
 		}
 
 		float walkBob = 0;
