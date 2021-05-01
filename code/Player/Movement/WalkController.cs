@@ -60,6 +60,7 @@ namespace ElementGame
 
 		public Duck Duck;
 		public Unstuck Unstuck;
+		public Slide Slide;
 
 		public int AllowedJumps = 0;
 		List<AdditionalJump> AllowedJumpsInfo = new();
@@ -68,6 +69,7 @@ namespace ElementGame
 		{
 			Duck = new Duck( this );
 			Unstuck = new Unstuck( this );
+			Slide = new Slide( this );
 		}
 
 		internal void ExtraJump( bool resetVelocity, float directionalPower = 0f, float modifiedJumpPower = 0f )
@@ -130,7 +132,7 @@ namespace ElementGame
 			SetBBox( mins, maxs );
 		}
 
-		protected float SurfaceFriction;
+		public float SurfaceFriction { get; protected set; }
 
 		public override void Tick()
 		{
@@ -239,6 +241,7 @@ namespace ElementGame
 			// Work out wish velocity.. just take input, rotate it to view, clamp to -1, 1
 			//
 			WishVelocity = new Vector3( Input.Forward, Input.Left, 0 );
+
 			var inSpeed = WishVelocity.Length.Clamp( 0, 1 );
 			WishVelocity *= Input.Rot;
 
@@ -251,6 +254,7 @@ namespace ElementGame
 			WishVelocity *= GetWishSpeed();
 
 			Duck.PreTick();
+			Slide.PreTick();
 
 			bool bStayOnGround = false;
 			if ( Swimming )
@@ -313,6 +317,9 @@ namespace ElementGame
 
 		public virtual float GetWishSpeed()
 		{
+			var slideSpeed = Slide.GetWishSpeed();
+			if ( slideSpeed >= 0 ) return slideSpeed;
+
 			var ws = Duck.GetWishSpeed();
 			if ( ws >= 0 ) return ws;
 
@@ -452,6 +459,13 @@ namespace ElementGame
 		/// </summary>
 		public virtual void Accelerate( Vector3 wishdir, float wishspeed, float speedLimit, float acceleration )
 		{
+			if (Slide.IsActive)
+			{
+				Slide.Accelerate( ref wishdir, ref wishspeed, ref speedLimit, ref acceleration );
+
+				return;
+			}
+
 			// This gets overridden because some games (CSPort) want to allow dead (observer) players
 			// to be able to move around.
 			// if ( !CanAccelerate() )
