@@ -28,6 +28,13 @@ namespace ElementGame
 			if ( Controller.GroundEntity == null )
 				return;
 
+			if ( Controller.Velocity.Length <= 64f )
+			{
+				StopTry();
+
+				return;
+			}
+
 			if ( wants != IsActive )
 			{
 				if ( wants ) Try();
@@ -52,6 +59,9 @@ namespace ElementGame
 
 		void StopTry()
 		{
+			if ( !IsActive )
+				return;
+
 			IsActive = false;
 		}
 
