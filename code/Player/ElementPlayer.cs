@@ -5,7 +5,14 @@ namespace ElementGame
 {
 	public partial class ElementPlayer : BasePlayer
 	{
-		public virtual bool IsSliding => ( GetActiveController() as WalkController ).Slide.IsActive;
+		public virtual bool IsSliding { 
+			get {
+				if ( GetActiveController() is WalkController controller )
+					return controller.Slide.IsActive;
+				else
+					return false;
+			}
+		}
 
 		[NetLocal]
 		public DamageInfo LastDamage { get; protected set; }
