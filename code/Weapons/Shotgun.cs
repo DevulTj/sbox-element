@@ -125,9 +125,9 @@ namespace ElementGame
 
 			if ( Owner is ElementPlayer player )
 			{
-				//var ammo = player.TakeAmmo( AmmoType, 1 );
-				//if ( ammo == 0 )
-				//	return;
+				var ammo = player.TakeAmmo( AmmoType, 1 );
+				if ( ammo == 0 )
+					return;
 
 				AmmoClip += 1;
 

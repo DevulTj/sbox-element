@@ -1,5 +1,4 @@
 using Sandbox;
-using System;
 
 namespace ElementGame
 {
@@ -65,7 +64,7 @@ namespace ElementGame
 
 			if ( Owner == Player.Local )
 			{
-				new Sandbox.ScreenShake.Perlin( 0.5f, 4.0f, 1.0f, 0.5f );
+				new ScreenShake.BasicRecoil( ViewModelEntity );
 			}
 
 			ViewModelEntity?.SetAnimParam( "fire", true );

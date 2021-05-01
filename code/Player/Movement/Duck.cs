@@ -19,6 +19,10 @@ namespace ElementGame
 		{
 			bool wants = Controller.Input.Down( InputButton.Duck );
 
+			// No crouching while you're already in the sky
+			if ( Controller.GroundEntity == null )
+				return;
+
 			if ( wants != IsActive )
 			{
 				if ( wants ) TryDuck();

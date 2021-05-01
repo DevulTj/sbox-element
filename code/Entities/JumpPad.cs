@@ -1,15 +1,8 @@
 
 using Sandbox;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ElementGame
 {
-	
-
 	[Library( "element_jumppad" )]
 	public partial class JumpPad : ModelEntity
 	{
@@ -18,23 +11,18 @@ namespace ElementGame
 		public virtual float JumpPowerForward => 400f;
 		public virtual float JumpPowerForwardDucked => 768f;
 
+		public Particles Effect { get; set; }
+
 		public JumpPad()
-        {
-			var particle = Particles.Create( "particles/green_circle_teleporter.vpcf", this, "Base", true );
+		{
+
 		}
 
 		public override void Spawn()
 		{
 			base.Spawn();
 
-			var state = Host.IsServer ? "SERVER" : "CLIENT";
-
-			Log.Info( $"[{state}] Spawning jump pad" );
-
 			SetModel( "models/props/jumppadlow.vmdl" );
-
-			
-
 			SetupPhysicsFromCapsule( PhysicsMotionType.Keyframed, new Capsule( Vector3.Zero, Vector3.One * 0.1f, 16f ) );
 
 			Transmit = TransmitType.Default;
@@ -43,28 +31,42 @@ namespace ElementGame
 			PhysicsEnabled = false;
 		}
 
+		public override void OnNewModel( Model model )
+		{
+			if ( Effect != null )
+				return;
+
+			Effect = Particles.Create( "particles/green_circle_teleporter.vpcf", this, "Base", true );
+		}
+
 		public override void StartTouch( Entity other )
-        {
+		{
 			base.StartTouch( other );
 
-			if ( IsClient ) return;
+			if ( IsClient )
+			{
+				return;
+			}
 
-			if ( other is Player player )
+			if ( other is ElementPlayer player )
 			{
 				if ( player.GetActiveController() is WalkController controller )
-                {
-					Vector3 directionNormalized = controller.Velocity.Normal;
+				{
+					var directionNormalized = controller.Velocity.Normal;
+					var duck = controller.Duck.IsActive;
+					var jumpPowerForward = duck ? JumpPowerForwardDucked : JumpPowerForward;
+					var jumpPowerUp = duck ? JumpPowerUpDucked : JumpPowerUp;
 
-					if ( controller.Duck.IsActive )
-                    {
-						controller.QueueImpulse( directionNormalized * JumpPowerForwardDucked + controller.Rot.Up * JumpPowerUpDucked, true );
-					}
-					else
-                    {
-						controller.QueueImpulse( directionNormalized * JumpPowerForward + controller.Rot.Up * JumpPowerUp, true );
-					}
+					// Queue an impulse for when the movement controller can process it
+					controller.QueueImpulse( directionNormalized * jumpPowerForward + controller.Rot.Up * jumpPowerUp, true );
+					// Allow the player to jump again
+					controller.ExtraJump( true, 300f, 368f );
+
+					PlaySound( "jumppad" );
+
+					player.JustHitJumpPad( player );
 				}
-            }
-        }
+			}
+		}
 	}
 }

@@ -1,21 +1,16 @@
 using Sandbox;
-using Sandbox.UI;
-using Sandbox.UI.Construct;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Threading.Tasks;
 
 namespace ElementGame
 {
 	public enum AmmoType
-    {
+	{
 		Pistol,
 		Rifle,
 		Shotgun,
-		RocketLauncher
-    }
+		RocketLauncher,
+
+		Max
+	}
 
 	partial class ElementWeapon : BaseWeapon
 	{
@@ -51,7 +46,7 @@ namespace ElementGame
 		{
 			var owner = Owner as ElementPlayer;
 			if ( owner == null ) return 0;
-			return 16; //owner.AmmoCount( AmmoType );
+			return owner.AmmoCount( AmmoType );
 		}
 
 		public override void ActiveStart( Entity ent )
@@ -93,8 +88,8 @@ namespace ElementGame
 
 			if ( Owner is ElementPlayer player )
 			{
-				//if ( player.AmmoCount( AmmoType ) <= 0 )
-				//	return;
+				if ( player.AmmoCount( AmmoType ) <= 0 )
+					return;
 
 				StartReloadEffects();
 			}
@@ -126,11 +121,11 @@ namespace ElementGame
 
 			if ( Owner is ElementPlayer player )
 			{
-				//var ammo = player.TakeAmmo( AmmoType, ClipSize - AmmoClip );
-				//if ( ammo == 0 )
-				//	return;
+				var ammo = player.TakeAmmo( AmmoType, ClipSize - AmmoClip );
+				if ( ammo == 0 )
+					return;
 
-				AmmoClip += ClipSize;
+				AmmoClip += ammo;
 			}
 		}
 
@@ -187,7 +182,8 @@ namespace ElementGame
 
 			if ( Owner == Player.Local )
 			{
-				new Sandbox.ScreenShake.Perlin();
+				// new Sandbox.ScreenShake.Perlin();
+				Owner.GetActiveCamera().Rot *= Rotation.FromAxis( Vector3.Right, 1f );
 			}
 
 			ViewModelEntity?.SetAnimParam( "fire", true );
@@ -199,7 +195,7 @@ namespace ElementGame
 		/// </summary>
 		public virtual void ShootBullet( float spread, float force, float damage, float bulletSize )
 		{
-			var forward = Owner.EyeRot.Forward;
+			var forward = Owner.GetActiveCamera().Rot.Forward;
 			forward += ( Vector3.Random + Vector3.Random + Vector3.Random + Vector3.Random ) * spread * 0.25f;
 			forward = forward.Normal;
 
