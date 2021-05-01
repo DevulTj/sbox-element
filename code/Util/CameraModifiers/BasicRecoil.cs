@@ -34,7 +34,9 @@ namespace ElementGame.ScreenShake
 
 			// Vector3 mouseDelta = ViewModelRef.Owner.Input.MouseDelta;
 
-			if ( ViewModelRef != null )
+
+			
+			if ( ViewModelRef != null && cam != null && ViewModelRef.IsValid() )
 			{
 				ViewModelRef.WorldRot *= Rotation.FromAxis( Vector3.Right, Angle * invdelta );
 				cam.Rot *= Rotation.FromAxis( Vector3.Right, ( Angle / 2 ) * invdelta );
