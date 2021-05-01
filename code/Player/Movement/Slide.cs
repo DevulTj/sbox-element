@@ -10,10 +10,14 @@ namespace ElementGame
 		public BasePlayerController Controller;
 
 		public bool IsActive; // replicate
+		public bool Wish;
 
 		public float BoostTime = 1f;
 
 		TimeSince Activated = 0;
+
+		// You can only slide once every X
+		public float Cooldown = 2f;
 
 		public Slide( BasePlayerController controller )
 		{
@@ -22,33 +26,36 @@ namespace ElementGame
 
 		public virtual void PreTick()
 		{
-			bool wants = Controller.Input.Down( InputButton.Duck ) && Controller.Input.Down( InputButton.Run );
+			bool isDown = Controller.Input.Down( InputButton.Duck ) && Controller.Input.Down( InputButton.Run );
+
+			var oldWish = Wish;
+			Wish = isDown;
+
+			if ( Controller.Velocity.Length <= 64f )
+				StopTry();
+
+			if ( oldWish == Wish )
+				return;
 
 			//// No sliding while you're already in the sky
 			if ( Controller.GroundEntity == null )
 				return;
 
-			if ( Controller.Velocity.Length <= 64f )
+			if ( isDown != IsActive )
 			{
-				StopTry();
-
-				return;
-			}
-
-			if ( wants != IsActive )
-			{
-				if ( wants ) Try();
+				if ( isDown ) Try();
 				else StopTry();
 			}
 
 			if ( IsActive )
-			{
 				Controller.SetTag( "sliding" );
-			}
 		}
 
 		void Try()
 		{
+			if ( Activated < Cooldown )
+				return;
+
 			var change = IsActive != true;
 
 			IsActive = true;
@@ -74,7 +81,7 @@ namespace ElementGame
 		internal void Accelerate( ref Vector3 wishdir, ref float wishspeed, ref float speedLimit, ref float acceleration )
 		{
 			var hitNormal = Controller.GroundNormal;
-			var speedMult = Vector3.Dot( Controller.Rot.Right, Vector3.Cross( Controller.Rot.Up, hitNormal ) );
+			var speedMult = Vector3.Dot( Controller.Velocity.Normal, Vector3.Cross( Controller.Rot.Up, hitNormal ) );
 
 			if ( BoostTime > Activated )
 			{
