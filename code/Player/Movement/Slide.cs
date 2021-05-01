@@ -52,20 +52,9 @@ namespace ElementGame
 
 		void StopTry()
 		{
-			var pm = Controller.TraceBBox( Controller.Pos, Controller.Pos, originalMins, originalMaxs );
-			if ( pm.StartedSolid ) return;
-
 			IsActive = false;
 		}
 
-		// Uck, saving off the bbox kind of sucks
-		// and we should probably be changing the bbox size in PreTick
-		Vector3 originalMins;
-		Vector3 originalMaxs;
-
-		//
-		// Coudl we do this in a generic callback too?
-		//
 		public float GetWishSpeed()
 		{
 			if ( !IsActive ) return -1;
