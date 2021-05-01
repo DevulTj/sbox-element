@@ -17,7 +17,11 @@ namespace ElementGame
 		TimeSince Activated = 0;
 
 		// You can only slide once every X
-		public float Cooldown = 2f;
+		public virtual float Cooldown => 2f;
+		public virtual float MinimumSpeed => 64f;
+		public virtual float WishDirectionFactor => 4f;
+
+		public virtual float SlideIntensity => 1 - ( Activated / BoostTime );
 
 		public Slide( BasePlayerController controller )
 		{
@@ -31,7 +35,7 @@ namespace ElementGame
 			var oldWish = Wish;
 			Wish = isDown;
 
-			if ( Controller.Velocity.Length <= 64f )
+			if ( Controller.Velocity.Length <= MinimumSpeed )
 				StopTry();
 
 			if ( oldWish == Wish )
@@ -83,14 +87,12 @@ namespace ElementGame
 			var hitNormal = Controller.GroundNormal;
 			var speedMult = Vector3.Dot( Controller.Velocity.Normal, Vector3.Cross( Controller.Rot.Up, hitNormal ) );
 
+			wishdir *= WishDirectionFactor;
+
 			if ( BoostTime > Activated )
-			{
-				var multiplier = ( 1 - ( Activated / BoostTime ) );
+				speedMult -= 1 - ( Activated / BoostTime );
 
-				speedMult -= multiplier;
-			}
-
-			Controller.Velocity += wishdir * MathF.Abs( speedMult ) * 20;
+			Controller.Velocity += wishdir + ( Controller.Velocity.Normal * MathF.Abs( speedMult ) * 20 );
 		}
 	}
 }

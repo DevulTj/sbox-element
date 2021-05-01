@@ -19,12 +19,18 @@ namespace ElementGame
 		private void AddCameraEffects( Camera camera )
 		{
 
-			WorldRot = Player.Local.EyeRot;
+			WorldRot = ElementPlayer.Local.EyeRot;
+
 
 			//
 			// Bob up and down based on our walk movement
 			//
 			var speed = Owner.Velocity.Length.LerpInverse( 0, 320 );
+			if ( ( Player.Local as ElementPlayer ).IsSliding )
+			{
+				speed = 0;
+			}
+
 			var left = camera.Rot.Left;
 			var up = camera.Rot.Up;
 

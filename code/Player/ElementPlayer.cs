@@ -1,9 +1,12 @@
 ﻿using Sandbox;
+using System;
 
 namespace ElementGame
 {
 	public partial class ElementPlayer : BasePlayer
 	{
+		public virtual bool IsSliding => ( GetActiveController() as WalkController ).Slide.IsActive;
+
 		[NetLocal]
 		public DamageInfo LastDamage { get; protected set; }
 
@@ -115,6 +118,23 @@ namespace ElementGame
 
 			new ViewPunch.Vertical( 10f, 0.6f );
 			new ViewPunch.FOVImpact( -15f, 2f );
+		}
+
+		float walkBob = 0;
+		float lean = 0;
+		public override void PostCameraSetup( Camera camera )
+		{
+				float speed = Velocity.Length.LerpInverse( 0, 320 );
+
+				if ( GroundEntity != null )
+					walkBob += Time.Delta * 25.0f * speed;
+
+				// Camera lean
+				lean = lean.LerpTo( Velocity.Dot( IsSliding ? camera.Rot.Right : Vector3.Zero ) * 0.03f, Time.Delta * 15.0f );
+
+				var appliedLean = lean;
+				appliedLean += MathF.Sin( walkBob ) * speed * 0.2f;
+				camera.Rot *= Rotation.From( 0, 0, appliedLean );
 		}
 	}
 }
