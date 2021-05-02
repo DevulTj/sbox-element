@@ -20,6 +20,7 @@ namespace ElementGame
 			RootPanel.AddChild<GameStateInfo>();
 
 			RootPanel.AddChild<ChatBox>();
+			RootPanel.AddChild<Scoreboard<ScoreboardEntry>>();
 		}
 	}
 
