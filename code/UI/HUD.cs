@@ -21,6 +21,7 @@ namespace ElementGame
 
 			RootPanel.AddChild<ChatBox>();
 			RootPanel.AddChild<Scoreboard<ScoreboardEntry>>();
+			RootPanel.AddChild<KillFeed>();
 		}
 	}
 
