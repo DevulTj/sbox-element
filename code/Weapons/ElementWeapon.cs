@@ -192,7 +192,7 @@ namespace ElementGame
 		/// </summary>
 		public virtual void ShootBullet( float spread, float force, float damage, float bulletSize )
 		{
-			var forward = Owner.GetActiveCamera().Rot.Forward;
+			var forward = Owner.EyeRot.Forward;
 			forward += ( Vector3.Random + Vector3.Random + Vector3.Random + Vector3.Random ) * spread * 0.25f;
 			forward = forward.Normal;
 

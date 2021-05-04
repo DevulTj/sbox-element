@@ -23,6 +23,7 @@ namespace ElementGame
 			RootPanel.AddChild<Scoreboard<ScoreboardEntry>>();
 			RootPanel.AddChild<KillFeed>();
 			RootPanel.AddChild<VoiceList>();
+			RootPanel.AddChild<NameTags>();
 		}
 	}
 

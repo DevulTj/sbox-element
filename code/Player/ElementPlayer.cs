@@ -97,7 +97,7 @@ namespace ElementGame
 
 			Controller = null;
 
-			var killCam = new KillCamera();
+			var killCam = new SpectateRagdollCamera();
 
 			Camera = killCam;
 

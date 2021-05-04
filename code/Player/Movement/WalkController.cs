@@ -143,28 +143,10 @@ namespace ElementGame
 
 			RestoreGroundPos();
 
-			//Velocity += BaseVelocity * ( 1 + Time.Delta * 0.5f );
-			//BaseVelocity = Vector3.Zero;
-
-			//  Rot = Rotation.LookAt( Input.Rot.Forward.WithZ( 0 ), Vector3.Up );
-
 			if ( Unstuck.TestAndFix() )
 				return;
 
-			// Check Stuck
-			// Unstuck - or return if stuck
-
-			// Set Ground Entity to null if  falling faster then 250
-
-			// store water level to compare later
-
-			// if not on ground, store fall velocity
-
-			// player->UpdateStepSound( player->m_pSurfaceData, mv->GetAbsOrigin(), mv->m_vecVelocity )
-
-
 			// RunLadderMode
-
 			CheckLadder();
 			Swimming = Player.WaterLevel.Fraction > 0.6f;
 
@@ -179,24 +161,8 @@ namespace ElementGame
 				BaseVelocity = BaseVelocity.WithZ( 0 );
 			}
 
-
-			/*
-				if (player->m_flWaterJumpTime)
-				{
-					WaterJump();
-					TryPlayerMove();
-					// See if we are still in water?
-					CheckWater();
-					return;
-				}
-			*/
-
-			// if ( underwater ) do underwater movement
-
 			if ( AutoJump ? Input.Down( InputButton.Jump ) : Input.Pressed( InputButton.Jump ) )
-			{
 				CheckJumpButton();
-			}
 
 			if ( ImpulseList.Count > 0 )
 			{
@@ -232,9 +198,7 @@ namespace ElementGame
 				//player->m_Local.m_flFallVelocity = 0.0f;
 
 				if ( GroundEntity != null )
-				{
 					ApplyFriction( GroundFriction * SurfaceFriction );
-				}
 			}
 
 			//
@@ -290,8 +254,6 @@ namespace ElementGame
 				Velocity = Velocity.WithZ( 0 );
 			}
 
-			// CheckFalling(); // fall damage etc
-
 			// Land Sound
 			// Swim Sounds
 
@@ -312,7 +274,6 @@ namespace ElementGame
 				DebugOverlay.ScreenText( lineOffset + 4, $" SurfaceFriction: {SurfaceFriction}" );
 				DebugOverlay.ScreenText( lineOffset + 5, $"    WishVelocity: {WishVelocity}" );
 			}
-
 		}
 
 		public virtual float GetWishSpeed()
