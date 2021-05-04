@@ -196,6 +196,10 @@ namespace ElementGame
 			forward += ( Vector3.Random + Vector3.Random + Vector3.Random + Vector3.Random ) * spread * 0.25f;
 			forward = forward.Normal;
 
+
+			bool isServer = IsServer;
+			Log.Info( isServer.ToString() );
+
 			//
 			// ShootBullet is coded in a way where we can have bullets pass through shit
 			// or bounce off shit, in which case it'll return multiple results
@@ -204,7 +208,7 @@ namespace ElementGame
 			{
 				tr.Surface.DoBulletImpact( tr );
 
-				if ( !IsServer ) continue;
+				if ( !isServer ) continue;
 				if ( !tr.Entity.IsValid() ) continue;
 
 				//
