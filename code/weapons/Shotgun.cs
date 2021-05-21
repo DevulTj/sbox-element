@@ -33,12 +33,13 @@ namespace Element.Weapon
 				return;
 			}
 
-			(Owner as AnimEntity).SetAnimParam( "b_attack", true );
+			(Owner as AnimEntity)?.SetAnimParam( "b_attack", true );
 
 			//
 			// Tell the clients to play the shoot effects
 			//
 			ShootEffects();
+			PerformRecoil();
 			PlaySound( "rust_pumpshotgun.shoot" );
 
 			//

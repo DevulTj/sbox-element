@@ -17,6 +17,11 @@ namespace Element.Weapon
 		public virtual int Bucket => 1;
 		public virtual int BucketWeight => 100;
 
+		public virtual float RecoilDestructTime => 0.2f;
+		public virtual float RecoilOnShot => 5f;
+
+		public float CurrentRecoilAmount { get; protected set; } = 0;
+
 		[NetPredicted] public int AmmoClip { get; set; }
 
 		[NetPredicted] public TimeSince TimeSinceReload { get; set; }
@@ -95,6 +100,11 @@ namespace Element.Weapon
 			{
 				OnReloadFinish();
 			}
+
+			if ( TimeSincePrimaryAttack > RecoilDestructTime )
+			{
+				CurrentRecoilAmount = 0;
+			}
 		}
 
 		public virtual void OnReloadFinish()
@@ -130,6 +140,11 @@ namespace Element.Weapon
 			ShootEffects();
 
 			//
+			// Do recoil
+			//
+			PerformRecoil();
+
+			//
 			// ShootBullet is coded in a way where we can have bullets pass through shit
 			// or bounce off shit, in which case it'll return multiple results
 			//
@@ -153,6 +168,12 @@ namespace Element.Weapon
 					tr.Entity.TakeDamage( damage );
 				}
 			}
+		}
+		
+		[ClientRpc]
+		protected virtual void PerformRecoil()
+		{
+			CurrentRecoilAmount += RecoilOnShot;
 		}
 
 		[ClientRpc]

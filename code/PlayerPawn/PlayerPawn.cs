@@ -21,9 +21,9 @@ namespace Element
 		{
 			SetModel( "models/citizen/citizen.vmdl" );
 
-			Controller = new WalkController();
+			Controller = new Element.WalkController();
 			Animator = new StandardPlayerAnimator();
-			Camera = new FirstPersonCamera();
+			Camera = new FPSCamera();
 
 			EnableAllCollisions = true;
 			EnableDrawing = true;

@@ -32,6 +32,7 @@ namespace Element.Weapon
 				DryFire();
 				return;
 			}
+			
 
 			(Owner as AnimEntity).SetAnimParam( "b_attack", true );
 
@@ -39,6 +40,8 @@ namespace Element.Weapon
 			// Tell the clients to play the shoot effects
 			//
 			ShootEffects();
+			PerformRecoil();
+			
 			PlaySound( "rust_smg.shoot" );
 
 			//

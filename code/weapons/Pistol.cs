@@ -42,6 +42,7 @@ namespace Element.Weapon
 			// Tell the clients to play the shoot effects
 			//
 			ShootEffects();
+			PerformRecoil();
 			PlaySound( "rust_pistol.shoot" );
 
 			//
