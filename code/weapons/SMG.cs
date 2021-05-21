@@ -3,7 +3,7 @@ using System;
 
 namespace Element.Weapon
 {
-	[Library( "dm_smg", Title = "SMG" )]
+	[Library( "element_rifle", Title = "SMG" )]
 	partial class SMG : BaseWeapon
 	{
 		public override string ViewModelPath => "weapons/rust_smg/v_rust_smg.vmdl";

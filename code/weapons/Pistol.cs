@@ -2,7 +2,7 @@
 
 namespace Element.Weapon
 {
-	[Library( "dm_pistol", Title = "Pistol" )]
+	[Library( "element_pistol", Title = "Pistol" )]
 	partial class Pistol : BaseWeapon
 	{
 		public override string ViewModelPath => "weapons/rust_pistol/v_rust_pistol.vmdl";

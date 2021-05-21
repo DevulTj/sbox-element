@@ -1,179 +1,103 @@
-﻿crosshair
-{
+﻿crosshair {
 	position: absolute;
 	transform: translateX( -50% ) translateY( -0% );
 	mix-blend-mode: lighten;
 	width: 1px;
 	height: 1px;
 
-	.element
-	{
+	.element {
 		position: absolute;
 	}
 
 
-	.el0
-	{
+	.el0 {
 		background-color: #ff0;
 		border-radius: 1000px;
 		width: 6px;
 		height: 6px;
 	}
 
-	&.dm_shotgun
-	{
-		opacity: 0.3;
-		transition: opacity 0.5s linear;
-
-		.el0
-		{
-			background-color: transparent;
-			border-radius: 1000px;
-			left: -100px;
-			top: -100px;
-			width: 200px;
-			height: 200px;
-			border: 6px solid #ff00;
-			border-left: 6px solid #ff0;
-			border-right: 6px solid #ff0;
-			transition: all 0.5s ease-out;
-		}
-
-		.el1
-		{
-			transition: all 0.5s ease-out;
-			background-color: #ff05;
-			border-radius: 1000px;
-			width: 10px;
-			height: 10px;
-			left: -5px;
-			top: -5px;
-		}
-
-		&.fire
-		{
-			opacity: 0.9;
-			transition: opacity 0.01s ease-out;
-
-			.el0
-			{
-				transition: all 0.01s ease-out;
-				left: -150px;
-				width: 300px;
-				border: 6px solid #0000;
-				border-left: 6px solid #fa0;
-				border-right: 6px solid #fa0;
-				opacity: 1.0;
-			}
-
-			.el1
-			{
-				transition: all 0.01s ease-out;
-				background-color: #ff0;
-				width: 16px;
-				height: 16px;
-				left: -8px;
-				top: -8px;
-			}
-		}
-	}
-
-	&.dm_pistol
-	{
+	&.element_rifle,
+	&.element_pistol {
 		opacity: 0.2;
 		transition: opacity 0.3s ease-out;
 
-		.el0, .el1, .el2, .el3
-		{
-			background-color: #ff0;
+		.el0, .el1, .el2, .el3 {
+			background-color: white;
 			border-radius: 0;
-			transition: all 0.5s ease-out;
+			transition: all 0.2s ease-out;
 		}
 
-		.el0, .el1
-		{
-			width: 10px;
+		.el0, .el1 {
+			width: 6px;
 			top: -1px;
-			height: 3px;
+			height: 2px;
 			border-radius: 2px;
 		}
 
-		.el2, .el3
-		{
-			width: 3px;
+		.el2, .el3 {
+			width: 2px;
 			left: -1px;
-			height: 10px;
+			height: 6px;
 			border-radius: 2px;
 		}
 
-		.el0
-		{
-			right: 8px;
+		.el0 {
+			right: 4px;
 		}
 
-		.el1
-		{
-			left: 8px;
+		.el1 {
+			left: 4px;
 		}
 
-		.el2
-		{
-			bottom: 5px;
+		.el2 {
+			bottom: 4px;
 		}
 
-		.el3
-		{
-			top: 5px;
+		.el3 {
+			top: 4px;
 		}
 
 
-		&.fire
-		{
+		&.fire {
 			opacity: 0.9;
 			transition: opacity 0.01s ease-out;
 
-			.el0, .el1, .el2, .el3
-			{
+			.el0, .el1, .el2, .el3 {
 				transition: all 0.01s ease-in;
-				background-color: #fa0;
+				background-color: red;
 			}
 
-			.el0
-			{
-				right: 60px;
+			.el0 {
+				right: 40px;
 				width: 3px;
 			}
 
-			.el1
-			{
-				left: 60px;
+			.el1 {
+				left: 40px;
 				width: 3px;
 			}
 
-			.el2
-			{
-				bottom: 60px;
+			.el2 {
+				bottom: 40px;
 				height: 3px;
 			}
 
-			.el3
-			{
-				top: 60px;
+			.el3 {
+				top: 40px;
 				height: 3px;
 			}
 		}
 	}
 
-	&.dm_smg
-	{
+	&.element_shotgun {
 		opacity: 0.5;
 		transition: opacity 0.5s ease-in;
 
-		.el0
-		{
+		.el0 {
 			background-color: transparent;
 			border-radius: 100px;
-			border: 2px solid #fc0;
+			border: 2px solid white;
 			width: 40px;
 			height: 40px;
 			left: -20px;
@@ -181,19 +105,17 @@
 			transition: all 0.3s ease-out;
 		}
 
-		&.fire
-		{
+		&.fire {
 			opacity: 0.9;
 			transition: opacity 0.01s ease-out;
 
-			.el0
-			{
+			.el0 {
 				transition: all 0.01s ease-in;
 				width: 150px;
 				height: 150px;
 				left: -75px;
 				top: -75px;
-				border: 5px solid #fc0;
+				border: 5px solid red;
 			}
 		}
 	}
