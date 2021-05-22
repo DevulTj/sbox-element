@@ -1,7 +1,6 @@
-
 using Sandbox;
 
-namespace ElementGame
+namespace Element
 {
 	[Library( "element_jumppad" )]
 	public partial class JumpPad : ModelEntity
@@ -48,7 +47,7 @@ namespace ElementGame
 				return;
 			}
 
-			if ( other is ElementPlayer player )
+			if ( other is PlayerPawn player )
 			{
 				if ( player.GetActiveController() is WalkController controller )
 				{
@@ -64,7 +63,7 @@ namespace ElementGame
 
 					PlaySound( "jumppad" );
 
-					player.JustHitJumpPad( player );
+					player.ViewPunch( 10f, 0.6f );
 				}
 			}
 		}
