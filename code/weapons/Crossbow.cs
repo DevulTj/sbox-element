@@ -2,7 +2,7 @@
 
 namespace Element.Weapon
 {
-	[Library( "dm_crossbow", Title = "Crossbow" )]
+	[Library( "element_crossbow", Title = "Crossbow" )]
 	partial class Crossbow : BaseWeapon
 	{
 		public override string ViewModelPath => "weapons/rust_crossbow/v_rust_crossbow.vmdl";
