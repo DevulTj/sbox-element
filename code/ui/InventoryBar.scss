@@ -21,15 +21,17 @@ inventorycolumn
 {
 	border-radius: 25px;
 	margin-right: 5px;
-	mix-blend-mode: lighten;
 	color: #ffffff;
+	mix-blend-mode: lighten;
 	flex-direction: column;
 	align-items: flex-start; // align to the left, don't stretch
 	
 	.slot-number
 	{
+		background-color: rgba(80, 80, 80, 0.5);
+		text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.85);
 		border-radius: 25px;
-		background-color: rgba(255, 255, 255, 0.3);
+		border: 2px solid rgba(80, 80, 80, 1);
 		padding: 9px 20px 5px 14px;
 		font-size: 20px;
 		font-weight: bolder;
@@ -40,7 +42,10 @@ inventorycolumn
 
 	inventoryicon
 	{
+		background-color: rgba(80, 80, 80, 0.5);
 		text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.85);
+		border-radius: 25px;
+		border: 2px solid rgba(80, 80, 80, 1);
 		border-radius: 25px;
 		opacity: 1;
 		padding: 25px 15px 10px 2px;
@@ -67,11 +72,12 @@ inventorycolumn
 			opacity: 0.2;
 			display: flex;
 			width: 200px;
-			height: 90px;
+			height: 100px;
 
 			.icon
 			{
 				opacity: 1;
+				box-shadow: 10px 10px;
 			}
 
 			&.active
