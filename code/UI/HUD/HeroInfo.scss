@@ -1,0 +1,40 @@
+
+heroinfo {
+  position: absolute;
+  bottom: 16px;
+  left: 64px;
+  color: #fff;
+  height: 64px;
+  width: inherit;
+  font-family: Biko;
+
+  background-color: rgba(80, 80, 80, 0.5);
+  padding: 8px 24px;
+  font-size: 32px;
+  text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.85);
+  border-radius: 25px;
+  border: 2px solid rgba(80, 80, 80, 1);
+
+  label {
+    text-shadow: 0px 0px 20px #000;
+  }
+
+  .heroIcon {
+    top: -10px;
+    left: -10px;
+    width: 64px;
+    height: 64px;
+    background-image: url( /ui/hero_images/volt.png );
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+
+  .heroName {
+    top: 0px;
+    font-size: 34px;
+    color: #ECECEC;
+    min-width: 50px;
+    text-align: right;
+    transition: color 0.2s ease;
+  }
+}
