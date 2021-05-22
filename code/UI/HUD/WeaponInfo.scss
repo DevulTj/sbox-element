@@ -17,27 +17,30 @@ weaponinfo {
   border: 2px solid rgba(80, 80, 80, 1);
   transition: all 1s ease-out;
 
-  .weaponIcon {
-    margin-left: 16px;
-    top: 0px;
-    left: 0px;
-    right: 20px;
-    width: 137px;
-    height: 64px;
-    background-image: url( /ui/weapons/rifle.png );
-    background-size: 100%;
-    background-repeat: no-repeat;
-  }
+  //.weaponIcon {
+  //  margin-left: 16px;
+  //  top: 0px;
+  //  left: 0px;
+  //  right: 20px;
+  //  width: 137px;
+  //  height: 64px;
+  //  background-image: url( /ui/weapons/rifle.png );
+  //  background-size: 100%;
+  //  background-repeat: no-repeat;
+  //}
 
   label {
     text-shadow: 0px 0px 20px #000;
   }
 
-  .icon {
-    width: 32px;
-    height: 32px;
+  .weaponIcon
+  {
+    left: 120px;
+    width: 110px;
+    height: 110px;
+    background-size: 100%;
+    background-image-tint: #ffffff;
     position: absolute;
-    right: 36px;
   }
 
   .textContainer {
@@ -48,16 +51,18 @@ weaponinfo {
   .weapon {
     font-size: 34px;
     color: #ECECEC;
-    min-width: 50px;
-    text-align: right;
+    min-width: 40px;
+    text-align: left;
     transition: color 0.2s ease;
   }
 
   .inventory {
+    padding-right: 110px;
     color: #ECECEC;
     font-size: 28px;
     font-weight: normal;
-    margin-left: 8px;
+    text-align: left;
+    margin-left: 0px;
     opacity: 0.5;
   }
 
