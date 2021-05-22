@@ -36,8 +36,9 @@ namespace Element.Weapon
 				DryFire();
 				return;
 			}
-
-
+			
+			TimeSinceSuccessfulPrimaryAttack = 0;
+			
 			//
 			// Tell the clients to play the shoot effects
 			//

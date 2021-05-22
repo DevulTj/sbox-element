@@ -8,7 +8,7 @@ namespace Element
 {
 	partial class PlayerPawn : Player
 	{
-		TimeSince timeSinceDropped;
+		TimeSince _timeSinceDropped;
 
 		public bool SupressPickupNotices { get; private set; }
 
@@ -109,7 +109,7 @@ namespace Element
 						dropped.PhysicsGroup.Velocity = Velocity + (EyeRot.Forward + EyeRot.Up) * 300;
 					}
 
-					timeSinceDropped = 0;
+					_timeSinceDropped = 0;
 					SwitchToBestWeapon();
 				}
 			}
@@ -141,7 +141,7 @@ namespace Element
 
 		public override void StartTouch( Entity other )
 		{
-			if ( timeSinceDropped < 1 ) return;
+			if ( _timeSinceDropped < 1 ) return;
 
 			base.StartTouch( other );
 		}

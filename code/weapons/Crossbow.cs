@@ -28,6 +28,8 @@ namespace Element.Weapon
 				DryFire();
 				return;
 			}
+			
+			TimeSinceSuccessfulPrimaryAttack = 0;
 
 			ShootEffects();
 

@@ -21,6 +21,8 @@ namespace Element.Weapon
 		public virtual float RecoilOnShot => 5f;
 
 		public float CurrentRecoilAmount { get; protected set; } = 0;
+		
+		[NetPredicted] public TimeSince TimeSinceSuccessfulPrimaryAttack { get; set; }
 
 		[NetPredicted] public int AmmoClip { get; set; }
 
@@ -101,7 +103,7 @@ namespace Element.Weapon
 				OnReloadFinish();
 			}
 
-			if ( TimeSincePrimaryAttack > RecoilDestructTime )
+			if ( TimeSinceSuccessfulPrimaryAttack > RecoilDestructTime )
 			{
 				CurrentRecoilAmount = 0;
 			}
@@ -132,6 +134,7 @@ namespace Element.Weapon
 		public override void AttackPrimary()
 		{
 			TimeSincePrimaryAttack = 0;
+			TimeSinceSuccessfulPrimaryAttack = 0;
 			TimeSinceSecondaryAttack = 0;
 
 			//

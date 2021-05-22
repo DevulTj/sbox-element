@@ -32,6 +32,8 @@ namespace Element.Weapon
 				DryFire();
 				return;
 			}
+			
+			TimeSinceSuccessfulPrimaryAttack = 0;
 
 			(Owner as AnimEntity)?.SetAnimParam( "b_attack", true );
 
