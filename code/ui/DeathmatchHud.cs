@@ -19,7 +19,7 @@ namespace Element.UI
 			RootPanel.StyleSheet.Load( "/ui/DeathmatchHud.scss" );
 
 			RootPanel.AddChild<VitalsInfo>();
-			RootPanel.AddChild<Ammo>();
+			RootPanel.AddChild<WeaponInfo>();
 
 			RootPanel.AddChild<NameTags>();
 			RootPanel.AddChild<DamageIndicator>();

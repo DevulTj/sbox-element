@@ -52,6 +52,8 @@ namespace Element.Weapon
 		}
 
 		public override string ViewModelPath => "weapons/rust_pistol/v_rust_pistol.vmdl";
+		
+		public virtual bool UnlimitedAmmo => false;
 
 		public override void Spawn()
 		{
