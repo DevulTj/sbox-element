@@ -61,23 +61,22 @@ ammo
 	}
 }
 
-
-.dm_pistol .icon
+.element_pistol .icon
 {
-	background-image: url( /ui/weapons/dm_pistol.png );
+	background-image: url( /ui/weapons/element_pistol.png );
 }
 
-.dm_shotgun .icon
+.element_shotgun .icon
 {
-	background-image: url( /ui/weapons/dm_shotgun.png );
+	background-image: url( /ui/weapons/element_shotgun.png );
 }
 
-.dm_smg .icon
+.element_rifle .icon
 {
-	background-image: url( /ui/weapons/dm_smg.png );
+	background-image: url( /ui/weapons/element_rifle.png );
 }
 
 .dm_crossbow .icon, .crossbow_bolt .icon
 {
-	background-image: url( /ui/weapons/dm_crossbow.png );
+	background-image: url( /ui/weapons/element_crossbow.png );
 }
