@@ -12,6 +12,9 @@ namespace Element.Weapon
 		public override int ClipSize => 8;
 		public override float ReloadTime => 0.5f;
 		public override int Bucket => 2;
+		
+		public override float RecoilOnShot => 60f;
+		public override float RecoilRecoveryScaleFactor => 10f;
 
 		public override void Spawn()
 		{
@@ -70,6 +73,7 @@ namespace Element.Weapon
 			// Tell the clients to play the shoot effects
 			//
 			DoubleShootEffects();
+			PerformRecoil();
 			PlaySound( "rust_pumpshotgun.shootdouble" );
 
 			//

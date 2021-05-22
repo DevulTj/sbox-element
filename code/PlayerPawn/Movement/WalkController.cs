@@ -10,6 +10,32 @@ using System.Threading.Tasks;
 
 namespace Element
 {
+	public struct Impulse
+	{
+		public Vector3 Direction;
+		public bool LiftPlayer;
+
+		public Impulse( Vector3 impulse, bool shouldLiftPlayer ) : this()
+		{
+			Direction = impulse;
+			LiftPlayer = shouldLiftPlayer;
+		}
+	}
+
+	public struct AdditionalJump
+	{
+		public float DirectionalPower;
+		public bool ResetVelocity;
+		public float ModifiedJumpPower;
+
+		public AdditionalJump( float directionalPower, bool resetVelocity, float modifiedJumpPower ) : this()
+		{
+			DirectionalPower = directionalPower;
+			ResetVelocity = resetVelocity;
+			ModifiedJumpPower = modifiedJumpPower;
+		}
+	}
+	
 	[Library]
 	public class WalkController : BasePlayerController
 	{
@@ -35,8 +61,9 @@ namespace Element
 		public float AirControl { get; set; } = 30.0f;
 		public bool Swimming { get; set; } = false;
 		public bool AutoJump { get; set; } = true;
-		public float JumpHeight { get; set; } = 30f;
+		public float JumpHeight { get; set; } = 256f;
 
+		public Slide Slide;
 		public Duck Duck;
 		public Unstuck Unstuck;
 		
@@ -44,6 +71,19 @@ namespace Element
 		{
 			Duck = new Duck( this );
 			Unstuck = new Unstuck( this );
+			Slide = new Slide( this );
+		}
+		
+		public int AllowedJumps = 0;
+		List<AdditionalJump> AllowedJumpsInfo = new();
+		
+		internal void ExtraJump( bool resetVelocity, float directionalPower = 0f, float modifiedJumpPower = 0f )
+		{
+			if ( modifiedJumpPower == 0f )
+				modifiedJumpPower = JumpHeight;
+
+			AllowedJumpsInfo.Add( new( directionalPower, resetVelocity, modifiedJumpPower ) );
+			AllowedJumps++;
 		}
 
 		/// <summary>
@@ -58,6 +98,13 @@ namespace Element
 			return new BBox( mins, maxs );
 		}
 
+		List<Impulse> ImpulseList = new();
+
+		public void QueueImpulse( Vector3 impulse, bool shouldLiftPlayer = false )
+			=> ImpulseList.Add( new( impulse, shouldLiftPlayer ) );
+
+		public void QueueImpulseAdditive( Vector3 impulse, bool shouldLiftPlayer = false )
+			=> ImpulseList.Add( new( Velocity + impulse, shouldLiftPlayer ) );
 
 		// Duck body height 32
 		// Eye Height 64
@@ -161,8 +208,28 @@ namespace Element
 			// if ( underwater ) do underwater movement
 
 			if ( AutoJump ? Input.Down( InputButton.Jump ) : Input.Pressed( InputButton.Jump ) )
-			{
 				CheckJumpButton();
+			
+			if ( ImpulseList.Count > 0 )
+			{
+				Velocity = Vector3.Zero;
+
+				bool hasLifted = false;
+				ImpulseList.ForEach( x =>
+				{
+					if ( x.LiftPlayer && !hasLifted )
+					{
+						hasLifted = true;
+
+						ClearGroundEntity();
+						AddEvent( "jump" );
+					}
+
+					Velocity += x.Direction;
+				} );
+
+				// Clear the list after we've done processing
+				ImpulseList.Clear();
 			}
 
 			// Fricion is handled before we add in any base velocity. That way, if we are on a conveyor, 
@@ -198,6 +265,7 @@ namespace Element
 			WishVelocity *= GetWishSpeed();
 
 			Duck.PreTick();
+			Slide.PreTick();
 
 			bool bStayOnGround = false;
 			if ( Swimming )
@@ -260,6 +328,9 @@ namespace Element
 
 		public virtual float GetWishSpeed()
 		{
+			var slideSpeed = Slide.GetWishSpeed();
+			if ( slideSpeed >= 0 ) return slideSpeed;
+
 			var ws = Duck.GetWishSpeed();
 			if ( ws >= 0 ) return ws;
 
@@ -387,10 +458,12 @@ namespace Element
 		/// </summary>
 		public virtual void Accelerate( Vector3 wishdir, float wishspeed, float speedLimit, float acceleration )
 		{
-			// This gets overridden because some games (CSPort) want to allow dead (observer) players
-			// to be able to move around.
-			// if ( !CanAccelerate() )
-			//     return;
+			if ( Slide.IsActive )
+			{
+				Slide.Accelerate( ref wishdir, ref wishspeed, ref speedLimit, ref acceleration );
+
+				return;
+			}
 
 			if ( speedLimit > 0 && wishspeed > speedLimit )
 				wishspeed = speedLimit;
@@ -453,86 +526,46 @@ namespace Element
 
 		void CheckJumpButton()
 		{
-			//if ( !player->CanJump() )
-			//    return false;
-
-
-			/*
-            if ( player->m_flWaterJumpTime )
-            {
-                player->m_flWaterJumpTime -= gpGlobals->frametime();
-                if ( player->m_flWaterJumpTime < 0 )
-                    player->m_flWaterJumpTime = 0;
-
-                return false;
-            }*/
-
-
-
 			// If we are in the water most of the way...
 			if ( Swimming )
 			{
 				// swimming, not jumping
 				ClearGroundEntity();
+				Velocity = Velocity.WithZ( 50f );
 
-				Velocity = Velocity.WithZ( JumpHeight );
+				return;
+			}
 
-				// play swimming sound
-				//  if ( player->m_flSwimSoundTime <= 0 )
+			if ( GroundEntity == null && AllowedJumps < 1 )
+				return;
+			
+			var resetVelocity = false;
+			var jumpDirectionalPower = 0f;
+			var usedJumpPower = JumpHeight;
+			if ( AllowedJumps > 0 )
+			{
+				var index = AllowedJumps - 1;
+				var jumpInfo = AllowedJumpsInfo[ index ];
+
+				resetVelocity = jumpInfo.ResetVelocity;
+				jumpDirectionalPower = jumpInfo.DirectionalPower;
+
+				if ( jumpInfo.ModifiedJumpPower > 0f )
 				{
-					// Don't play sound again for 1 second
-					//   player->m_flSwimSoundTime = 1000;
-					//   PlaySwimSound();
+					usedJumpPower = jumpInfo.ModifiedJumpPower;
 				}
 
-				return;
+				AllowedJumpsInfo.RemoveAt( index );
+				AllowedJumps--;
 			}
-
-			if ( GroundEntity == null )
-				return;
-
-			/*
-            if ( player->m_Local.m_bDucking && (player->GetFlags() & FL_DUCKING) )
-                return false;
-            */
-
-			/*
-            // Still updating the eye position.
-            if ( player->m_Local.m_nDuckJumpTimeMsecs > 0u )
-                return false;
-            */
 
 			ClearGroundEntity();
-
-			// player->PlayStepSound( (Vector &)mv->GetAbsOrigin(), player->m_pSurfaceData, 1.0, true );
-
-			// MoveHelper()->PlayerSetAnimation( PLAYER_JUMP );
-
-			float flGroundFactor = 1.0f;
-			//if ( player->m_pSurfaceData )
-			{
-				//   flGroundFactor = g_pPhysicsQuery->GetGameSurfaceproperties( player->m_pSurfaceData )->m_flJumpFactor;
-			}
-
-			float flMul = 268.3281572999747f * 1.2f;
-
-			float startz = Velocity.z;
-
-			if ( Duck.IsActive )
-				flMul *= 0.8f;
-
-			Velocity = Velocity.WithZ( startz + flMul * flGroundFactor );
-
+			
+			Velocity = Velocity.WithZ( 0f );
+			Velocity = resetVelocity ? new Vector3( 0, 0, usedJumpPower ) + ( WishVelocity.Normal * jumpDirectionalPower ) : Velocity.WithZ( usedJumpPower );
 			Velocity -= new Vector3( 0, 0, Gravity * 0.5f ) * Time.Delta;
 
-			// mv->m_outJumpVel.z += mv->m_vecVelocity[2] - startz;
-			// mv->m_outStepHeight += 0.15f;
-
-			// don't jump again until released
-			//mv->m_nOldButtons |= IN_JUMP;
-
 			AddEvent( "jump" );
-
 		}
 
 		public virtual void AirMove()

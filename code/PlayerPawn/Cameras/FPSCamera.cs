@@ -9,7 +9,7 @@ namespace Element
 {
 	public class FPSCamera : Camera
 	{
-		Vector3 lastPos;
+		Vector3 _lastPos;
 
 		public override void Activated()
 		{
@@ -19,7 +19,7 @@ namespace Element
 			Pos = pawn.EyePos;
 			Rot = pawn.EyeRot;
 
-			lastPos = Pos;
+			_lastPos = Pos;
 		}
 
 		public override void BuildInput( InputBuilder input )
@@ -31,8 +31,10 @@ namespace Element
 
 			if ( weapon == null )
 				return;
-			
+
+			var oldPitch = input.ViewAngles.pitch;
 			input.ViewAngles.pitch -= weapon.CurrentRecoilAmount * Time.Delta;
+			weapon.CurrentRecoilAmount -= (oldPitch - input.ViewAngles.pitch) * weapon.RecoilRecoveryScaleFactor;
 			
 			base.BuildInput( input );
 		}
@@ -44,13 +46,13 @@ namespace Element
 
 			var eyePos = pawn.EyePos;
 
-			Pos = Vector3.Lerp( eyePos.WithZ( lastPos.z ), eyePos, 20.0f * Time.Delta );
+			Pos = Vector3.Lerp( eyePos.WithZ( _lastPos.z ), eyePos, 20.0f * Time.Delta );
 			Rot = pawn.EyeRot;
 
 			FieldOfView = 80;
 
 			Viewer = pawn;
-			lastPos = Pos;
+			_lastPos = Pos;
 		}
 	}
 }

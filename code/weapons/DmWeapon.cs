@@ -16,11 +16,12 @@ namespace Element.Weapon
 		public virtual float ReloadTime => 3.0f;
 		public virtual int Bucket => 1;
 		public virtual int BucketWeight => 100;
+		
+		public virtual float RecoilOnShot => 10f;
 
-		public virtual float RecoilDestructTime => 0.2f;
-		public virtual float RecoilOnShot => 5f;
+		public virtual float RecoilRecoveryScaleFactor => 5f;
 
-		public float CurrentRecoilAmount { get; protected set; } = 0;
+		public float CurrentRecoilAmount { get; set; } = 0;
 		
 		[NetPredicted] public TimeSince TimeSinceSuccessfulPrimaryAttack { get; set; }
 
@@ -101,11 +102,6 @@ namespace Element.Weapon
 			if ( IsReloading && TimeSinceReload > ReloadTime )
 			{
 				OnReloadFinish();
-			}
-
-			if ( TimeSinceSuccessfulPrimaryAttack > RecoilDestructTime )
-			{
-				CurrentRecoilAmount = 0;
 			}
 		}
 

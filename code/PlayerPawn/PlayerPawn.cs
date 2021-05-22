@@ -11,6 +11,16 @@ namespace Element
 		TimeSince _timeSinceDropped;
 
 		public bool SupressPickupNotices { get; private set; }
+		
+		public virtual bool IsSliding { 
+			get {
+				if ( GetActiveController() is WalkController controller )
+					return controller.Slide.IsActive;
+				else
+					return false;
+			}
+		}
+
 
 		public PlayerPawn()
 		{
