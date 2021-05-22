@@ -263,5 +263,13 @@ namespace Element
 
 			DamageIndicator.Current?.OnHit( pos );
 		}
+		
+		[ClientRpc]
+		public void ViewPunch( float Angle, float Time )
+		{
+			Host.AssertClient();
+
+			new ViewPunch.Vertical( Angle, Time );
+		}
 	}
 }
