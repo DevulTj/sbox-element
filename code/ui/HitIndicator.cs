@@ -17,8 +17,8 @@ public partial class HitIndicator : Panel
 	public override void Tick()
 	{
 		base.Tick();
+		this.PositionAtCrosshair();
 	}
-
 	public void OnHit( Vector3 pos, float amount )
 	{
 		new HitPoint( amount, pos, this );

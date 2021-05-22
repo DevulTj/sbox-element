@@ -34,7 +34,7 @@ public partial class PickupFeed : Panel
 	private async Task AddEntry( string text )
 	{
 		var panel = Current.Add.Label( text );
-		await Task.Delay( 500 );
+		await Task.Delay( 200 );
 		panel.Delete();
 	}
 }

@@ -2,25 +2,24 @@
 {
 	mix-blend-mode: lighten;
 	position: absolute;
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
-	position: absolute;
+	transform: translateX( -50% ) translateY( -0% );
+	width: 1px;
+	height: 1px;
+	
 	align-items: center;
 	justify-content: center;
 
 
 	hitpoint
 	{
-		width: 60px;
-		height: 60px;
+		width: 50px;
+		height: 50px;
 		background-color: red;
 		opacity: 0.7;
 		position: absolute;
 		transition: all 0.1s ease-out;
 		background-image: url( /ui/hit.png );
-		background-image-tint: #fc0;
+		background-image-tint: #ffffff;
 		background-size: 100%;
 
 		label
@@ -35,6 +34,8 @@
 		&:outro
 		{
 			transition: all 0.1s ease-in;
+			width: 0px;
+			height: 0px;
 			opacity: 0;
 		}
 	}

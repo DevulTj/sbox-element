@@ -50,13 +50,13 @@ KillFeedEntry
 		width: 100px;
 		height: 100px;
 		background-size: 100%;
-		background-image-tint: red;
+		background-image-tint: #ffffff;
 	}
 
 	.left, .right
 	{
 		padding: 0 12px;
-		color: #fc0;
+		color: rgba(255, 255, 255, 0.72);
 
 		&.me
 		{
