@@ -211,6 +211,17 @@ namespace Element
 			// Camera lean
 			lean = lean.LerpTo( Velocity.Dot( setup.Rotation.Right ) * 0.01f, Time.Delta * 15.0f );
 
+			var controller = Controller as WalkController;
+			var wallRun = controller.WallRun;
+			var wallRunLean = wallRun.GetWallJumpDirection();
+
+			if ( wallRun.IsWallRunning )
+			{
+				Log.Info( "wall run lean: " + wallRunLean.ToString()  );
+				Log.Info( "dot: " + wallRunLean.Dot( setup.Rotation.Right ) * 0.01f  );
+				lean = lean.LerpTo( ( wallRunLean.Dot( setup.Rotation.Right ) * 0.01f ) * 20f, Time.Delta * 10.0f );
+			}
+
 			var appliedLean = lean;
 			appliedLean += MathF.Sin( walkBob ) * speed * 0.2f;
 			setup.Rotation *= Rotation.From( 0, 0, appliedLean );

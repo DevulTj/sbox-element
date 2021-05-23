@@ -23,15 +23,15 @@ namespace Element.Weapon
 
 		public float CurrentRecoilAmount { get; set; } = 0;
 		
-		[NetPredicted] public TimeSince TimeSinceSuccessfulPrimaryAttack { get; set; }
+		[Net, Predicted] public TimeSince TimeSinceSuccessfulPrimaryAttack { get; set; }
 
-		[NetPredicted] public int AmmoClip { get; set; }
+		[Net, Predicted] public int AmmoClip { get; set; }
 
-		[NetPredicted] public TimeSince TimeSinceReload { get; set; }
+		[Net, Predicted] public TimeSince TimeSinceReload { get; set; }
 
-		[NetPredicted] public bool IsReloading { get; set; }
+		[Net, Predicted] public bool IsReloading { get; set; }
 
-		[NetPredicted] public TimeSince TimeSinceDeployed { get; set; }
+		[Net, Predicted] public TimeSince TimeSinceDeployed { get; set; }
 
 
 		public PickupTrigger PickupTrigger { get; protected set; }

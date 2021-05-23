@@ -66,12 +66,16 @@ namespace Element
 		public Slide Slide;
 		public Duck Duck;
 		public Unstuck Unstuck;
+		public WallRun WallRun;
 		
+		public TimeSince TimeSinceJumped { get; protected set; }
+
 		public WalkController()
 		{
 			Duck = new Duck( this );
 			Unstuck = new Unstuck( this );
 			Slide = new Slide( this );
+			WallRun = new WallRun( this );
 		}
 		
 		public int AllowedJumps = 0;
@@ -266,6 +270,7 @@ namespace Element
 
 			Duck.PreTick();
 			Slide.PreTick();
+			WallRun.PreTick();
 
 			bool bStayOnGround = false;
 			if ( Swimming )
@@ -536,7 +541,7 @@ namespace Element
 				return;
 			}
 
-			if ( GroundEntity == null && AllowedJumps < 1 )
+			if ( GroundEntity == null && AllowedJumps < 1 && !WallRun.IsWallRunning )
 				return;
 			
 			var resetVelocity = false;
@@ -564,6 +569,8 @@ namespace Element
 			Velocity = Velocity.WithZ( 0f );
 			Velocity = resetVelocity ? new Vector3( 0, 0, usedJumpPower ) + ( WishVelocity.Normal * jumpDirectionalPower ) : Velocity.WithZ( usedJumpPower );
 			Velocity -= new Vector3( 0, 0, Gravity * 0.5f ) * Time.Delta;
+
+			TimeSinceJumped = 0;
 
 			AddEvent( "jump" );
 		}
