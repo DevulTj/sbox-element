@@ -541,7 +541,7 @@ namespace Element
 				return;
 			}
 
-			if ( GroundEntity == null && AllowedJumps < 1 )
+			if ( GroundEntity == null && AllowedJumps < 1 && !WallRun.IsWallRunning )
 				return;
 			
 			var resetVelocity = false;

@@ -143,25 +143,6 @@ namespace Element
 				return LastWallNormal * 50 + Vector3.Up;
 			
 			return Vector3.Zero;
-		} 
-		
-		public float GetWishSpeed()
-		{
-			if ( !IsActive ) return -1;
-			return 128;
-		}
-
-		internal void Accelerate( ref Vector3 wishdir, ref float wishspeed, ref float speedLimit, ref float acceleration )
-		{
-			// var hitNormal = Controller.GroundNormal;
-			// var speedMult = Vector3.Dot( Controller.Velocity.Normal, Vector3.Cross( Controller.Rot.Up, hitNormal ) );
-			//
-			// wishdir *= WishDirectionFactor;
-			//
-			// if ( BoostTime > Activated )
-			// 	speedMult -= 1 - ( Activated / BoostTime );
-			//
-			// Controller.Velocity += wishdir + ( Controller.Velocity.Normal * MathF.Abs( speedMult ) * 20 );
 		}
 	}
 }
