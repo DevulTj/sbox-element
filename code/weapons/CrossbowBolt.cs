@@ -54,7 +54,7 @@ namespace Element.Weapon
 
 				if ( tr.Entity.IsValid() )
 				{
-					var damageInfo = DamageInfo.FromBullet( tr.EndPos, tr.Direction * 200, 60.0f )
+					var damageInfo = DamageInfo.FromBullet( tr.EndPos, tr.Direction * 200, 100.0f )
 						.UsingTraceResult( tr )
 						.WithAttacker( Owner )
 						.WithWeapon( this );

@@ -49,7 +49,7 @@ namespace Element.Weapon
 			//
 			// Shoot the bullets
 			//
-			ShootBullet( 0.05f, 1.5f, 9.0f, 3.0f );
+			ShootBullet( 0.05f, 1.5f, 25.0f, 3.0f );
 
 		}
 	}
