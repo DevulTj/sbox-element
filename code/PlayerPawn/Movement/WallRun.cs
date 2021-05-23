@@ -31,7 +31,7 @@ namespace Element
 		protected TraceResult[] Hits = new TraceResult[5];
 
 		TimeSince Activated = 0;
-
+		
 		// You can only slide once every X
 		public virtual float Cooldown => 2f;
 		public virtual float MinimumSpeed => 64f;
@@ -39,7 +39,8 @@ namespace Element
 
 		public virtual float WallMaxDistance => 16f;
 		public virtual float NormalizedAngleThreshold => 0.1f;
-		public virtual float WallSpeedMultiplier => 256f;
+		public virtual float WallSpeedMultiplier => 300f;
+		public virtual float JumpCooldown => 0.3f;
 		
 		public WallRun( BasePlayerController controller )
 		{
@@ -56,7 +57,8 @@ namespace Element
 		// Only allow wall run if we are not on the ground
 		public bool CanAttach()
 		{
-			return Controller.GroundEntity == null && Controller.Input.Forward != 0;
+			return Controller.GroundEntity == null && Controller.Input.Forward != 0 &&
+			       Controller.Velocity.Length >= (WallSpeedMultiplier * 0.9f) && (Controller as WalkController)?.TimeSinceJumped > JumpCooldown;
 		}
 
 		public virtual void PreTick()
@@ -120,7 +122,7 @@ namespace Element
 
 				DebugOverlay.Line( Controller.Position, Controller.Position + alongWall.Normal * 10f, Color.Green );
 				DebugOverlay.Line( Controller.Position, LastWallNormal * 10, Color.Magenta );
-
+				
 				Controller.Velocity = alongWall * vertical * WallSpeedMultiplier;
 
 				IsWallRunning = true;

@@ -68,6 +68,8 @@ namespace Element
 		public Unstuck Unstuck;
 		public WallRun WallRun;
 		
+		public TimeSince TimeSinceJumped { get; protected set; }
+
 		public WalkController()
 		{
 			Duck = new Duck( this );
@@ -567,6 +569,8 @@ namespace Element
 			Velocity = Velocity.WithZ( 0f );
 			Velocity = resetVelocity ? new Vector3( 0, 0, usedJumpPower ) + ( WishVelocity.Normal * jumpDirectionalPower ) : Velocity.WithZ( usedJumpPower );
 			Velocity -= new Vector3( 0, 0, Gravity * 0.5f ) * Time.Delta;
+
+			TimeSinceJumped = 0;
 
 			AddEvent( "jump" );
 		}
