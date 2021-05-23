@@ -66,12 +66,14 @@ namespace Element
 		public Slide Slide;
 		public Duck Duck;
 		public Unstuck Unstuck;
+		public WallRun WallRun;
 		
 		public WalkController()
 		{
 			Duck = new Duck( this );
 			Unstuck = new Unstuck( this );
 			Slide = new Slide( this );
+			WallRun = new WallRun( this );
 		}
 		
 		public int AllowedJumps = 0;
@@ -266,6 +268,7 @@ namespace Element
 
 			Duck.PreTick();
 			Slide.PreTick();
+			WallRun.PreTick();
 
 			bool bStayOnGround = false;
 			if ( Swimming )
