@@ -22,23 +22,25 @@ namespace Element
 
 		protected Vector3 LastWallPosition;
 		protected Vector3 LastWallNormal;
-
-		public bool IsActive; // replicate
-		public bool Wish;
-
+		
 		public bool IsWallRunning { get; protected set; } = false;
 
 		protected TraceResult[] Hits = new TraceResult[5];
+		protected TimeSince Activated = 0;
 
-		TimeSince Activated = 0;
+		public virtual float TimeUntilSlowDown => 1.5f;
+		public virtual float SlowDownSpeed => 100f;
 		
+		public virtual float TimeUntilStopClimbingUp => 1.5f;
+		public virtual float ClimbUpSpeed => 50f;
+
 		// You can only slide once every X
 		public virtual float Cooldown => 2f;
 		public virtual float MinimumSpeed => 64f;
 		public virtual float WishDirectionFactor => 4f;
 
 		public virtual float WallMaxDistance => 16f;
-		public virtual float NormalizedAngleThreshold => 0.1f;
+		public virtual float NormalizedAngleThreshold => 1f;
 		public virtual float WallSpeedMultiplier => 300f;
 		public virtual float JumpCooldown => 0.3f;
 		
@@ -54,11 +56,21 @@ namespace Element
 			Activated = Cooldown;
 		}
 
+		protected void Activate()
+		{
+			if ( IsWallRunning )
+				return;
+
+			IsWallRunning = true;
+			Activated = 0;
+		}
+
 		// Only allow wall run if we are not on the ground
 		public bool CanAttach()
 		{
 			return Controller.GroundEntity == null && Controller.Input.Forward != 0 &&
-			       Controller.Velocity.Length >= (WallSpeedMultiplier * 0.9f) && (Controller as WalkController)?.TimeSinceJumped > JumpCooldown;
+			       Controller.Velocity.Length >= (WallSpeedMultiplier * 0.9f) && 
+			       (Controller as WalkController)?.TimeSinceJumped > JumpCooldown;
 		}
 
 		public virtual void PreTick()
@@ -66,12 +78,8 @@ namespace Element
 			if ( !CanAttach() )
 			{
 				Reset();
-				
 				return;
 			}
-
-			// @TODO: Find out the state of the player to see if we want to wall run or not
-			// Then control state based on what we're doing
 
 			Hits = new TraceResult[ DirectionsOfTravel.Length ];
 
@@ -107,7 +115,7 @@ namespace Element
 			}
 			else
 			{
-				IsWallRunning = false;
+				Reset();
 			}
 		}
 
@@ -125,11 +133,23 @@ namespace Element
 				
 				Controller.Velocity = alongWall * vertical * WallSpeedMultiplier;
 
-				IsWallRunning = true;
+				if ( Activated > TimeUntilSlowDown )
+				{
+					Controller.Velocity += Vector3.Down * SlowDownSpeed;
+				}
+
+				if ( Activated < TimeUntilStopClimbingUp )
+				{
+					float percent = Activated / TimeUntilStopClimbingUp;
+					
+					Controller.Velocity += Vector3.Up * ( ClimbUpSpeed * Easing.EaseOut( percent ) );
+				}
+
+				Activate();
 			}
 			else
 			{
-				IsWallRunning = false;
+				Reset();
 			}
 
 			// Ensure this is at the end
