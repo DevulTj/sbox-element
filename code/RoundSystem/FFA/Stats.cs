@@ -31,6 +31,9 @@ namespace Element.FreeForAll
 
 		public override BaseRound GetNextRound()
 		{
+			if ( Client.All.Count < Game.MinPlayers )
+				return new WaitingRound();
+
 			return new IntroRound();
 		}
 	}
