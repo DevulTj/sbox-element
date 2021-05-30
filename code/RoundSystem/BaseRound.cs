@@ -25,22 +25,49 @@ namespace Element
 			get { return EndTime - Time.Now; }
 		}
 
-		// Functionality
+		public void DoLog( string text )
+		{
+			var State = Host.IsServer ? "SERVER" : "CLIENT";
 
-		public virtual void Begin()
+			Sandbox.Log.Info( $"[{State}] " + text );
+		}
+
+		// Functionality
+		public void Begin()
 		{
 			if ( Host.IsServer && Length > 0 )
 			{
 				EndTime = Time.Now + Length;
 			}
+
+			OnBegin();
 		}
 
-		public virtual void End()
+		protected virtual void OnBegin()
+		{
+
+		}
+
+		public void End()
 		{
 			EndTime = 0f;
+
+			OnEnd();
+
+			( Game.Current as Game )?.SetRound( GetNextRound() );
 		}
 
-		public virtual void Tick()
+		protected virtual void OnEnd()
+		{
+
+		}
+
+		public void Tick()
+		{
+			OnTick();
+		}
+
+		protected virtual void OnTick()
 		{
 
 		}
@@ -52,10 +79,14 @@ namespace Element
 				if ( EndTime > 0 && Time.Now >= EndTime )
 				{
 					EndTime = 0f;
-
 					End();
 				}
 			}
+		}
+
+		public virtual BaseRound GetNextRound()
+		{
+			return null;
 		}
 	}
 }

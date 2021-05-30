@@ -41,6 +41,8 @@ namespace Element
 			ItemRespawn.Init();
 
 			_ = StartSecondTimer();
+
+			SetRound( new WaitingRound() );
 		}
 
 		public override void ClientJoined( Client cl )
@@ -53,15 +55,15 @@ namespace Element
 			cl.Pawn = player;
 		}
 
-		public virtual void ChangeRound( BaseRound newRound )
+		public virtual void SetRound( BaseRound newRound = null )
 		{
-			if ( newRound == null )
+			// Prioritize the round specified by the OLD round.
+			var roundToUse = newRound;
+
+			if ( roundToUse == null )
 				return;
 
-			// End active round
-			Round?.End();
-
-			// Assign new one and start it
+			// Assign new one and start it.
 			Round = newRound;
 			Round.Begin();
 		}
@@ -86,24 +88,8 @@ namespace Element
 			}
 		}
 
-		protected void CheckMinimumPlayers()
-		{
-			if ( Client.All.Count >= MinPlayers )
-			{
-				if ( Round is WaitingRound || Round == null )
-				{
-					ChangeRound( new FFARound() );
-				}
-			}
-			else if ( Round is not WaitingRound )
-			{
-				ChangeRound( new WaitingRound() );
-			}
-		}
-
 		private void OnSecond()
 		{
-			CheckMinimumPlayers();
 			Round?.SecondPassed();
 		}
 
@@ -113,12 +99,11 @@ namespace Element
 
 			if ( IsClient )
 			{
-				// We have to hack around this for now until we can detect changes in net variables.
+				// This is a hack for networking. I hate it. I hate it. We must fix this in the future.
 				if ( _lastRound != Round )
 				{
 					_lastRound?.End();
 					_lastRound = Round;
-					_lastRound.Begin();
 				}
 			}
 		}
