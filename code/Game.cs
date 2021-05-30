@@ -16,6 +16,9 @@ namespace Element
 
 		protected BaseRound _lastRound;
 
+		[ServerVar( "element_min_players", Help = "The minimum players required to start." )]
+		public static int MinPlayers { get; set; } = 2;
+
 		public Game()
 		{
 			//
@@ -55,6 +58,8 @@ namespace Element
 			if ( newRound == null )
 				return;
 
+			Log.Info( "changing round to round: " + newRound.Name );
+
 			// End active round
 			Round?.End();
 
@@ -83,15 +88,45 @@ namespace Element
 			}
 		}
 
+		protected void CheckMinimumPlayers()
+		{
+			Log.Info( $"Player count: {Client.All.Count}, MinPlayers: {MinPlayers}" );
+
+			if ( Client.All.Count >= MinPlayers )
+			{
+				if ( Round is WaitingRound || Round == null )
+				{
+					ChangeRound( new FFARound() );
+				}
+			}
+			else if ( Round is not WaitingRound )
+			{
+				ChangeRound( new WaitingRound() );
+			}
+		}
+
 		private void OnSecond()
 		{
-			// CheckMinimumPlayers();
+			Log.Info( "OnSecond" );
+
+			CheckMinimumPlayers();
 			Round?.SecondPassed();
 		}
 
 		private void OnTick()
 		{
 			Round?.Tick();
+
+			if ( IsClient )
+			{
+				// We have to hack around this for now until we can detect changes in net variables.
+				if ( _lastRound != Round )
+				{
+					_lastRound?.End();
+					_lastRound = Round;
+					_lastRound.Begin();
+				}
+			}
 		}
 	}
 }

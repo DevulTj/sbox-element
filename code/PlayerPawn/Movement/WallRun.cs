@@ -36,8 +36,6 @@ namespace Element
 
 		// You can only slide once every X
 		public virtual float Cooldown => 2f;
-		public virtual float MinimumSpeed => 64f;
-		public virtual float WishDirectionFactor => 4f;
 
 		public virtual float WallMaxDistance => 16f;
 		public virtual float NormalizedAngleThreshold => 1f;

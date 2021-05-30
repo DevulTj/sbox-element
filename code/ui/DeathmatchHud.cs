@@ -21,6 +21,7 @@ namespace Element.UI
 			RootPanel.AddChild<VitalsInfo>();
 			RootPanel.AddChild<WeaponInfo>();
 			RootPanel.AddChild<HeroInfo>();
+			RootPanel.AddChild<RoundInfo>();
 
 			RootPanel.AddChild<NameTags>();
 			RootPanel.AddChild<DamageIndicator>();
