@@ -28,7 +28,7 @@ namespace Element
 			//
 			if ( IsServer )
 			{
-				new UI.DeathmatchHud();
+				new UI.GameHud();
 			}
 
 			_ = StartTickTimer();
@@ -57,8 +57,6 @@ namespace Element
 		{
 			if ( newRound == null )
 				return;
-
-			Log.Info( "changing round to round: " + newRound.Name );
 
 			// End active round
 			Round?.End();
@@ -90,8 +88,6 @@ namespace Element
 
 		protected void CheckMinimumPlayers()
 		{
-			Log.Info( $"Player count: {Client.All.Count}, MinPlayers: {MinPlayers}" );
-
 			if ( Client.All.Count >= MinPlayers )
 			{
 				if ( Round is WaitingRound || Round == null )
@@ -107,8 +103,6 @@ namespace Element
 
 		private void OnSecond()
 		{
-			Log.Info( "OnSecond" );
-
 			CheckMinimumPlayers();
 			Round?.SecondPassed();
 		}

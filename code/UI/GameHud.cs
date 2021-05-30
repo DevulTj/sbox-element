@@ -9,14 +9,14 @@ namespace Element.UI
 {
 
 	[Library]
-	public partial class DeathmatchHud : HudEntity<RootPanel>
+	public partial class GameHud : HudEntity<RootPanel>
 	{
-		public DeathmatchHud()
+		public GameHud()
 		{
 			if ( !IsClient )
 				return;
 
-			RootPanel.StyleSheet.Load( "/ui/DeathmatchHud.scss" );
+			RootPanel.StyleSheet.Load( "/ui/GameHud.scss" );
 
 			RootPanel.AddChild<VitalsInfo>();
 			RootPanel.AddChild<WeaponInfo>();
