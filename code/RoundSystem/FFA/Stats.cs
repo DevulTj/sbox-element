@@ -11,7 +11,8 @@ namespace Element.FreeForAll
 	public class StatsRound : BaseRound
 	{
 		public override int Length => 10;
-		public override string Name => "Round over";
+		public override string Name => "Game over";
+		public override string StartMessage => $"Game over -> The winner is";
 		public override BaseRound GetNextRound() => Client.All.Count < Game.MinPlayers ? new WaitingRound() : new IntroRound();
 	}
 }
