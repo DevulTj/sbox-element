@@ -75,6 +75,11 @@ namespace Element
 			}
 		}
 
+		public virtual void OnClientLeft( Client cl, NetworkDisconnectionReason reason )
+		{
+
+		}
+
 		public virtual void OnClientJoined( Client cl )
 		{
 			

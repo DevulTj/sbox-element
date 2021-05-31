@@ -45,6 +45,13 @@ namespace Element
 			SetRound( new WaitingRound() );
 		}
 
+		public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )
+		{
+			Round?.OnClientLeft( cl, reason );
+
+			base.ClientDisconnect( cl, reason );
+		}
+
 		public override void ClientJoined( Client cl )
 		{
 			base.ClientJoined( cl );
