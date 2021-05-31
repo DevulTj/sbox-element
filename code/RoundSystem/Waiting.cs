@@ -11,34 +11,12 @@ namespace Element
 	{
 		public override string Name => "Waiting for players";
 
-		protected override void OnBegin()
+		public override BaseRound GetNextRound() => new FreeForAll.IntroRound();
+
+		public override void OnClientJoined( Client cl )
 		{
-			base.OnBegin();
-
-			DoLog( "Started Lobby Round" );
-		}
-
-		protected override void OnEnd()
-		{
-			base.OnEnd();
-
-			DoLog( "Finished Lobby Round" );
-		}
-
-		public override void OnSecondPassed()
-		{
-			var game = Game.Current as Game;
-			if ( game == null ) return;
-
 			if ( Client.All.Count >= Game.MinPlayers )
-			{
 				End();
-			}
-		}
-
-		public override BaseRound GetNextRound()
-		{
-			return new FreeForAll.IntroRound();
 		}
 	}
 }
