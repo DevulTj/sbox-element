@@ -25,7 +25,7 @@ namespace Element
 			DoLog( "Finished Lobby Round" );
 		}
 
-		public override void SecondPassed()
+		public override void OnSecondPassed()
 		{
 			var game = Game.Current as Game;
 			if ( game == null ) return;

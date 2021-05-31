@@ -53,6 +53,8 @@ namespace Element
 			player.Respawn();
 
 			cl.Pawn = player;
+
+			Round.OnClientJoined( cl );
 		}
 
 		public virtual void SetRound( BaseRound newRound = null )
@@ -90,7 +92,7 @@ namespace Element
 
 		private void OnSecond()
 		{
-			Round?.SecondPassed();
+			Round?.OnSecondPassed();
 		}
 
 		private void OnTick()

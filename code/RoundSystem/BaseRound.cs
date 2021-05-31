@@ -29,7 +29,7 @@ namespace Element
 		{
 			var State = Host.IsServer ? "SERVER" : "CLIENT";
 
-			Sandbox.Log.Info( $"[{State}] " + text );
+			Log.Info( $"[{State}] " + text );
 		}
 
 		// Functionality
@@ -43,10 +43,7 @@ namespace Element
 			OnBegin();
 		}
 
-		protected virtual void OnBegin()
-		{
-
-		}
+		protected virtual void OnBegin() { }
 
 		public void End()
 		{
@@ -57,22 +54,16 @@ namespace Element
 			( Game.Current as Game )?.SetRound( GetNextRound() );
 		}
 
-		protected virtual void OnEnd()
-		{
-
-		}
+		protected virtual void OnEnd() { }
 
 		public void Tick()
 		{
 			OnTick();
 		}
 
-		protected virtual void OnTick()
-		{
+		protected virtual void OnTick() { }
 
-		}
-
-		public virtual void SecondPassed()
+		public virtual void OnSecondPassed()
 		{
 			if ( Host.IsServer )
 			{
@@ -82,6 +73,11 @@ namespace Element
 					End();
 				}
 			}
+		}
+
+		public virtual void OnClientJoined( Client cl )
+		{
+			
 		}
 
 		public virtual BaseRound GetNextRound()
