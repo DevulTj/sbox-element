@@ -1,18 +1,20 @@
 
 using Sandbox;
+using Sandbox.UI;
 using System;
 
 namespace Element
 {
 	public abstract partial class BaseRound : NetworkComponent
 	{
-		// Configuration
 		public virtual int Length => 0;
 		public virtual string Name => "Round";
+		// A chatbox message for when this round starts
+		public virtual string StartMessage => "";
+		// A chatbox message for when this round ends
+		public virtual string EndMessage => "";
 
-		// Networked variables
-		[Net]
-		public float EndTime { get; set; }
+		[Net] public float EndTime { get; set; }
 
 		// Properties
 		public string TimeLeftFormatted
@@ -28,7 +30,6 @@ namespace Element
 		public void DoLog( string text )
 		{
 			var State = Host.IsServer ? "SERVER" : "CLIENT";
-
 			Log.Info( $"[{State}] " + text );
 		}
 
@@ -40,18 +41,24 @@ namespace Element
 				EndTime = Time.Now + Length;
 			}
 
+			if ( Host.IsClient && StartMessage.Length > 0 )
+				ChatBox.AddInformation( StartMessage );
+
 			OnBegin();
 		}
 
 		protected virtual void OnBegin() { }
 
-		public void End()
+		public void End( BaseRound newRound = null )
 		{
 			EndTime = 0f;
 
 			OnEnd();
 
-			( Game.Current as Game )?.SetRound( GetNextRound() );
+			if ( Host.IsClient && EndMessage.Length > 0 )
+				ChatBox.AddInformation( EndMessage );
+
+			( Game.Current as Game ).SetRound( newRound ?? GetNextRound() );
 		}
 
 		protected virtual void OnEnd() { }
