@@ -3,7 +3,7 @@
 	position: absolute;
 	z-index: 100;
 	flex-direction: column;
-	font-family: Roboto;
+	font-family: Biko;
 	font-size: 23px;
 	font-weight: 500;
 	color: white;
@@ -13,11 +13,11 @@
 	justify-content: center;
 	opacity: 0;
 	transition: all 0.1s ease-out;
-	transform: scale( 1.05 );
-	transform-origin: 50% 50%;
-	background-size: 100% 100%;
+	transform: scale( 1.2 );
+	transform-origin: 50% 100%;
+	background-size: 0% 0%;
 	background-position: center center;
-	background-color: rgba( 10, 10, 10, 0.8 );
+	background-color: rgba( 10, 10, 10, 0.95 );
 
 	&.open
 	{
@@ -30,16 +30,10 @@
 		flex-grow: 1;
 	}
 
-	.deaths, .kills, .ping, .fps
+	.deaths, .kills
 	{
 		width: 90px;
 		text-align: right;
-	}
-
-	.ping, .fps
-	{
-		opacity: 0.3;
-		width: 50px;
 	}
 
 	.deaths
@@ -50,11 +44,11 @@
 	.header
 	{
 		font-weight: 500;
-		border-bottom: 3px solid #fc0;
-		min-width: 30%;
+		border-bottom: 3px solid white;
+		min-width: 40%;
 		margin-bottom: 10px;
 		padding-bottom: 5px;
-		color: #fc0;
+		color: white;
 		mix-blend-mode: lighten;
 	}
 
@@ -62,7 +56,7 @@
 	{
 		flex-direction: column;
 		min-height: 50%;
-		min-width: 30%;
+		min-width: 40%;
 		mix-blend-mode: lighten;
 
 		.entry
@@ -79,7 +73,7 @@
 
 			&.me
 			{
-				background-color: #00aa;
+				background-color: white;
 			}
 		}
 	}
