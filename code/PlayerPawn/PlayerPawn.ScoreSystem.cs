@@ -7,7 +7,7 @@ namespace Element
 {
 	public partial class PlayerStats : NetworkComponent
 	{
-		public static List<PlayerPawn> GetPlayersSorted() => Player.All.Select( x => x as PlayerPawn ).OrderBy( x => x.Stats.Kills ).ToList();
+		public static List<PlayerPawn> GetPlayersSorted() => Client.All.Select( x => x.Pawn as PlayerPawn ).OrderByDescending( x => x.Stats?.Kills ).ToList();
 		// Easy accessor to get the winner
 		public static PlayerPawn GetWinner() => GetPlayersSorted().First();
 

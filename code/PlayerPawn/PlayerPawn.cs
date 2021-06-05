@@ -25,6 +25,7 @@ namespace Element
 		public PlayerPawn()
 		{
 			Inventory = new Inventory( this );
+			Stats = new PlayerStats();
 		}
 
 		public override void Respawn()
