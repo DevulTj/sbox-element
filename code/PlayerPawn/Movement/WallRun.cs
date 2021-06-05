@@ -39,7 +39,7 @@ namespace Element
 
 		public virtual float WallMaxDistance => 16f;
 		public virtual float NormalizedAngleThreshold => 1f;
-		public virtual float WallSpeedMultiplier => 300f;
+		public virtual float WallSpeedMultiplier => 400f;
 		public virtual float JumpCooldown => 0.3f;
 		
 		public WallRun( BasePlayerController controller )
@@ -66,7 +66,7 @@ namespace Element
 		// Only allow wall run if we are not on the ground
 		public bool CanAttach()
 		{
-			return Controller.GroundEntity == null && Controller.Input.Forward != 0 &&
+			return Controller.GroundEntity == null &&
 			       Controller.Velocity.Length >= (WallSpeedMultiplier * 0.9f) && 
 			       (Controller as WalkController)?.TimeSinceJumped > JumpCooldown;
 		}
@@ -123,7 +123,7 @@ namespace Element
 			if( d >= -NormalizedAngleThreshold && d <= NormalizedAngleThreshold )
 			{
 				// Vector3 alongWall = Vector3.Cross(hit.normal, Vector3.up);
-				float vertical = Controller.Input.Forward;
+				float vertical = 1;
 				Vector3 alongWall = Controller.Rotation.Forward;
 
 				DebugOverlay.Line( Controller.Position, Controller.Position + alongWall.Normal * 10f, Color.Green );
