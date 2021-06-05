@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace Element
 {
-	partial class PlayerPawn : Player
+	public partial class PlayerPawn : Player
 	{
 		TimeSince _timeSinceDropped;
 

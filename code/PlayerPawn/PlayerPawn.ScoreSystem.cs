@@ -1,10 +1,16 @@
 ﻿using Sandbox;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Element
 {
 	public partial class PlayerStats : NetworkComponent
 	{
+		public static List<PlayerPawn> GetPlayersSorted() => Player.All.Select( x => x as PlayerPawn ).OrderBy( x => x.Stats.Kills ).ToList();
+		// Easy accessor to get the winner
+		public static PlayerPawn GetWinner() => GetPlayersSorted().First();
+
 		[Net] protected int Kills { get; set; }
 		[Net] protected int Deaths { get; set; }
 
