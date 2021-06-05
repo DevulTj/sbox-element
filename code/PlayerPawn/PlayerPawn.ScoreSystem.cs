@@ -5,8 +5,8 @@ namespace Element
 {
 	public partial class PlayerStats : NetworkComponent
 	{
-		[Net] public int Kills { get; set; }
-		[Net] public int Deaths { get; set; }
+		[Net] protected int Kills { get; set; }
+		[Net] protected int Deaths { get; set; }
 
 		public void Clear()
 		{
@@ -17,8 +17,11 @@ namespace Element
 			}
 		}
 
+		public void Kill() => Kills++;
+		public void Die() => Deaths++;
 		public int GetKills() => Kills;
 		public int GetDeaths() => Deaths;
+
 		public float GetKillDeathRatio() => Convert.ToSingle( Kills ) / Convert.ToSingle( Deaths );
 	}
 
