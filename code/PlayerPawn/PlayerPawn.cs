@@ -280,6 +280,8 @@ namespace Element
 		{
 			Host.AssertClient();
 
+			if ( this != Local.Pawn ) return;
+
 			new ViewPunch.Vertical( Angle, Time );
 		}
 	}
