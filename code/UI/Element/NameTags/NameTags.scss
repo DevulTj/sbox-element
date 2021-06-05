@@ -10,30 +10,15 @@
 	{
 		font-family: Biko;
 		position: absolute;
-		font-weight: 500;
+		font-weight: 600;
 		color: white;
-		background-color: rgba( #222, 0.95 );
-		font-size: 40px;
+		background-color: rgba( #222, 0.0 );
+		text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.85);
+		font-size: 80px;
 		transform-origin: 50% 0%;
 		border-radius: 10px;
 		align-items: center;
 		justify-content: center;
 		flex-direction: row-reverse;
-
-
-		label
-		{
-			padding: 1px 60px;
-			padding-left: 40px;
-		}
-
-		image
-		{
-			width: 60px;
-			height: 60px;			
-			margin: 20px;
-			margin-right: 0px;
-			border-radius: 100px;
-		}
 	}
 }

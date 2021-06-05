@@ -13,7 +13,6 @@ namespace Element.UI
 	public class BaseNameTag : Panel
 	{
 		public Label NameLabel;
-		public Image Avatar;
 
 		Player player;
 
@@ -24,7 +23,6 @@ namespace Element.UI
 			var client = player.GetClientOwner();
 
 			NameLabel = Add.Label( $"{client.Name}" );
-			Avatar = Add.Image( $"avatar:{client.SteamId}" );
 		}
 
 		public virtual void UpdateFromPlayer( Player player )
@@ -37,7 +35,7 @@ namespace Element.UI
 	{
 		Dictionary<Player, BaseNameTag> ActiveTags = new Dictionary<Player, BaseNameTag>();
 
-		public float MaxDrawDistance = 400;
+		public float MaxDrawDistance = 800;
 		public int MaxTagsToShow = 5;
 
 		public NameTags()
@@ -117,18 +115,13 @@ namespace Element.UI
 			if ( CurrentView.Rotation.Forward.Dot( lookDir ) < 0.5 )
 				return false;
 
-			// TODO - can we see them
-
-
-			MaxDrawDistance = 400;
-
 			// Max Draw Distance
 
 
 			var alpha = dist.LerpInverse( MaxDrawDistance, MaxDrawDistance * 0.1f, true );
 
 			// If I understood this I'd make it proper function
-			var objectSize = 0.05f / dist / (2.0f * MathF.Tan( (CurrentView.FieldOfView / 2.0f).DegreeToRadian() )) * 1500.0f;
+			var objectSize = 0.05f / dist / (2.0f * MathF.Tan( (CurrentView.FieldOfView / 2.0f).DegreeToRadian() )) * 2000.0f;
 
 			objectSize = objectSize.Clamp( 0.05f, 1.0f );
 
