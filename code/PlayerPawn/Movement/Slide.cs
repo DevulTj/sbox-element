@@ -35,7 +35,7 @@ namespace Element
 
 		public virtual void PreTick()
 		{
-			bool isDown = Controller.Input.Down( InputButton.Duck ) && Controller.Input.Down( InputButton.Run );
+			bool isDown = Controller.Input.Down( InputButton.Duck );
 
 			var oldWish = Wish;
 			Wish = isDown;
