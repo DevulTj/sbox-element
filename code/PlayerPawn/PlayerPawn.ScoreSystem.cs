@@ -10,6 +10,11 @@ namespace Element
 		public static List<PlayerPawn> GetPlayersSorted() => Client.All.Select( x => x.Pawn as PlayerPawn ).OrderByDescending( x => x.Stats?.Kills ).ToList();
 		// Easy accessor to get the winner
 		public static PlayerPawn GetWinner() => GetPlayersSorted().First();
+		public static void ClearAll()
+		{
+			Client.All.Select( x => x.Pawn as PlayerPawn )
+				.ToList().ForEach( x => x.Stats.Clear() );
+		}
 
 		[Net] protected int Kills { get; set; }
 		[Net] protected int Deaths { get; set; }

@@ -18,6 +18,12 @@ namespace Element.FreeForAll
 			base.OnBegin();
 
 			DoLog( "Started Intro" );
+
+			if ( Host.IsServer )
+			{
+				// Clear player stats
+				PlayerStats.ClearAll();
+			}
 		}
 
 		protected override void OnEnd()
