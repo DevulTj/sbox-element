@@ -44,6 +44,16 @@ namespace Element.FreeForAll
 			} );
 		}
 
+		public override void OnSecondPassed()
+		{
+			base.OnSecondPassed();
+
+			if ( TimeRemaining < 1f )
+				return;
+
+			Sound.FromScreen( "second_elapsed" );
+		}
+
 		public override BaseRound GetNextRound()
 		{
 			return new MainRound();
