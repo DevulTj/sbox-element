@@ -25,12 +25,12 @@ namespace Element.FreeForAll
 			{
 				// Clear player stats
 				PlayerStats.ClearAll();
-			}
 
-			Client.All.Select( x => x.Pawn as PlayerPawn ).ToList().ForEach( x => {
-				x.Respawn();
-				x.NoMove = true;
-			} );
+				Client.All.Select( x => x.Pawn as PlayerPawn ).ToList().ForEach( x => {
+					x.Respawn();
+					x.NoMove = true;
+				} );
+			}
 		}
 
 		protected override void OnEnd()
@@ -39,9 +39,12 @@ namespace Element.FreeForAll
 
 			DoLog( "Finished Intro" );
 
-			Client.All.Select( x => x.Pawn as PlayerPawn ).ToList().ForEach( x => {
-				x.NoMove = false;
-			} );
+			if ( Host.IsServer )
+			{
+				Client.All.Select( x => x.Pawn as PlayerPawn ).ToList().ForEach( x => {
+					x.NoMove = false;
+				} );
+			}
 		}
 
 		public override void OnSecondPassed()

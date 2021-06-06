@@ -1,4 +1,5 @@
 using Sandbox;
+using Sandbox.Rcon;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
 
