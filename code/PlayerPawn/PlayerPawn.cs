@@ -53,11 +53,9 @@ namespace Element
 			Inventory.Add( new Weapon.Pistol(), true );
 			Inventory.Add( new Weapon.Shotgun() );
 			Inventory.Add( new Weapon.SMG() );
-			Inventory.Add( new Weapon.Crossbow() );
 
 			GiveAmmo( AmmoType.Pistol, 100 );
 			GiveAmmo( AmmoType.Buckshot, 8 );
-			GiveAmmo( AmmoType.Crossbow, 4 );
 
 			SupressPickupNotices = false;
 			Health = 100;
