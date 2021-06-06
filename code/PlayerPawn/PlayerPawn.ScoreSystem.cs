@@ -32,10 +32,17 @@ namespace Element
 		{
 			var result = Convert.ToSingle( Kills ) / Convert.ToSingle( Deaths );
 
+			// Handle NaN
 			if ( float.IsNaN( result ) )
 			{
 				return 1f;
 			}
+			// Handle cannot divide by zero
+			else if ( Deaths == 0 )
+			{
+				return Kills;
+			}
+			// Round to 1 decimal point
 			else
 			{
 				return MathF.Round( result, 1 );
