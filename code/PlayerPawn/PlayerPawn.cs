@@ -12,6 +12,8 @@ namespace Element
 
 		public bool SupressPickupNotices { get; private set; }
 
+		[Net, Local] public bool NoMove { get; set; }
+
 		public virtual bool IsSliding {
 			get {
 				if ( GetActiveController() is WalkController controller )

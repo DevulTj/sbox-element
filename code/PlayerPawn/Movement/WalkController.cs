@@ -153,6 +153,12 @@ namespace Element
 
 		public override void Simulate()
 		{
+			if ( Pawn is PlayerPawn pawn )
+			{
+				if ( pawn.NoMove )
+					return;
+			}
+
 			EyePosLocal = Vector3.Up * (EyeHeight * Pawn.Scale);
 			UpdateBBox();
 

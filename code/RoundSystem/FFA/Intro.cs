@@ -27,7 +27,10 @@ namespace Element.FreeForAll
 				PlayerStats.ClearAll();
 			}
 
-			Client.All.Select( x => x.Pawn as PlayerPawn ).ToList().ForEach( x => x.Respawn() );
+			Client.All.Select( x => x.Pawn as PlayerPawn ).ToList().ForEach( x => {
+				x.Respawn();
+				x.NoMove = true;
+			} );
 		}
 
 		protected override void OnEnd()
@@ -35,6 +38,10 @@ namespace Element.FreeForAll
 			base.OnEnd();
 
 			DoLog( "Finished Intro" );
+
+			Client.All.Select( x => x.Pawn as PlayerPawn ).ToList().ForEach( x => {
+				x.NoMove = false;
+			} );
 		}
 
 		public override BaseRound GetNextRound()
