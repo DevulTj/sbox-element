@@ -12,7 +12,7 @@ namespace Element.FreeForAll
 	{
 		public override int Length => 10;
 		public override string Name => "Game over";
-		public override string StartMessage => $"Game over -> The winner is";
+		public override string StartMessage => $"Game over -> The winner is { PlayerStats.GetWinner().GetClientOwner().Name } ";
 		public override BaseRound GetNextRound() => Client.All.Count < Game.MinPlayers ? new WaitingRound() : new IntroRound();
 	}
 }
