@@ -2,6 +2,7 @@
 using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
+using System;
 using System.Collections.Generic;
 
 namespace Element.UI
@@ -45,6 +46,8 @@ namespace Element.UI
 			{
 				Update( client );
 			}
+
+			Canvas.SortChildren<ScoreboardEntry>( x => -x.Kills.Text.ToInt() );
 		}
 
 		public override void Tick()
