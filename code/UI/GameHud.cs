@@ -18,7 +18,6 @@ namespace Element.UI
 
 			RootPanel.StyleSheet.Load( "/ui/GameHud.scss" );
 
-			RootPanel.AddChild<VitalsInfo>();
 			RootPanel.AddChild<WeaponInfo>();
 			RootPanel.AddChild<HeroInfo>();
 			RootPanel.AddChild<RoundInfo>();

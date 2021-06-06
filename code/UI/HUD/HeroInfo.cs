@@ -6,14 +6,14 @@ namespace Element
 {
 	public class HeroInfo : Panel
 	{
-		public Label HeroImage;
 		public Label HeroName;
+		public Image HeroImage;
 
 		public HeroInfo()
 		{
 			StyleSheet.Load( "/UI/HUD/HeroInfo.scss" );
 
-			HeroImage = Add.Label( "", "heroIcon" );
+			HeroImage = Add.Image( /*$"avatar:{ Local.Client.SteamId }"*/"", "heroIcon" );
 			HeroName = Add.Label( "Volt", "heroName" );
 		}
 
@@ -27,7 +27,8 @@ namespace Element
 
 			SetClass( "active", isValid );
 
-			HeroName.Text = "Volt";
+			HeroImage.SetTexture( $"avatar:{ Local.Client?.SteamId }" );
+			HeroName.Text = $"{player.Health:n0}%";
 		}
 	}
 }
