@@ -28,7 +28,19 @@ namespace Element
 		public int GetKills() => Kills;
 		public int GetDeaths() => Deaths;
 
-		public float GetKillDeathRatio() => Convert.ToSingle( Math.Max( 1, Kills ) ) / Convert.ToSingle( Math.Max( 1, Deaths ) );
+		public float GetKillDeathRatio()
+		{
+			var result = Convert.ToSingle( Kills ) / Convert.ToSingle( Deaths );
+
+			if ( float.IsNaN( result ) )
+			{
+				return 1f;
+			}
+			else
+			{
+				return result;
+			}
+		}
 	}
 
 	partial class PlayerPawn
