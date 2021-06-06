@@ -752,6 +752,12 @@ namespace Element
 			if ( GroundEntity != null )
 			{
 				BaseVelocity = GroundEntity.Velocity;
+
+				if ( wasOffGround )
+				{
+					AllowedJumps = 0;
+					AllowedJumpsInfo.Clear();
+				}
 			}
 
 			/*
