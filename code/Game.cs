@@ -121,7 +121,7 @@ namespace Element
 		{
 			base.OnKilled( client, pawn );
 
-			var attackerClient = pawn.LastAttacker.GetClientOwner();
+			var attackerClient = pawn.LastAttacker?.GetClientOwner();
 			if ( attackerClient != null && attackerClient.Pawn is PlayerPawn attackerPawn )
 			{
 				attackerPawn?.Stats.Kill();
