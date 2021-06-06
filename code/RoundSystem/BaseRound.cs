@@ -96,5 +96,10 @@ namespace Element
 		{
 			return null;
 		}
+
+		public virtual void OnPlayerKilled( Client attacker, Client victim )
+		{
+			// Do nothing in base
+		}
 	}
 }

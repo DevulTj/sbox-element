@@ -128,6 +128,8 @@ namespace Element
 			}
 
 			( pawn as PlayerPawn )?.Stats.Die();
+
+			Round?.OnPlayerKilled( attackerClient, client );
 		}
 	}
 }
