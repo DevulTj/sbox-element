@@ -9,7 +9,9 @@ namespace Element.FreeForAll
 {
 	public class IntroRound : BaseRound
 	{
-		public override int Length => 5;
+		public override int Length => 10;
+
+		public override string StartMessage => "The game will start soon. All players were respawned.";
 
 		public override string Name => "Starting in";
 
@@ -24,6 +26,8 @@ namespace Element.FreeForAll
 				// Clear player stats
 				PlayerStats.ClearAll();
 			}
+
+			Client.All.Select( x => x.Pawn as PlayerPawn ).ToList().ForEach( x => x.Respawn() );
 		}
 
 		protected override void OnEnd()
