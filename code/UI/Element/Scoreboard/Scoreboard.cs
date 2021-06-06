@@ -16,10 +16,10 @@ namespace Element.UI
 		protected override void AddHeader()
 		{
 			Header = Add.Panel( "header" );
-			Header.Add.Label( "name", "name" );
-			Header.Add.Label( "kills", "kills" );
-			Header.Add.Label( "deaths", "deaths" );
-			Header.Add.Label( "ping", "ping" );
+			Header.Add.Label( "Name", "name" );
+			Header.Add.Label( "Kills", "kills" );
+			Header.Add.Label( "Deaths", "deaths" );
+			Header.Add.Label( "Ping", "ping" );
 		}
 	}
 
