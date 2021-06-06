@@ -38,7 +38,7 @@ namespace Element
 			}
 			else
 			{
-				return result;
+				return MathF.Round( result, 1 );
 			}
 		}
 	}
