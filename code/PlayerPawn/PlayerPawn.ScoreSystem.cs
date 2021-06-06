@@ -46,5 +46,10 @@ namespace Element
 	partial class PlayerPawn
 	{
 		[Net] public PlayerStats Stats { get; private set; }
+
+		partial void Construct()
+		{
+			Stats = new PlayerStats();
+		}
 	}
 }

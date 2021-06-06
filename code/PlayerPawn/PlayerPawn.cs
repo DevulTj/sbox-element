@@ -11,8 +11,8 @@ namespace Element
 		TimeSince _timeSinceDropped;
 
 		public bool SupressPickupNotices { get; private set; }
-		
-		public virtual bool IsSliding { 
+
+		public virtual bool IsSliding {
 			get {
 				if ( GetActiveController() is WalkController controller )
 					return controller.Slide.IsActive;
@@ -21,11 +21,13 @@ namespace Element
 			}
 		}
 
+		partial void Construct();
 
 		public PlayerPawn()
 		{
 			Inventory = new Inventory( this );
-			Stats = new PlayerStats();
+
+			Construct();
 		}
 
 		public override void Respawn()
