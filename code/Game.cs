@@ -116,5 +116,18 @@ namespace Element
 				}
 			}
 		}
+
+		public override void OnKilled( Client client, Entity pawn )
+		{
+			base.OnKilled( client, pawn );
+
+			var attackerClient = pawn.LastAttacker.GetClientOwner();
+			if ( attackerClient != null && attackerClient.Pawn is PlayerPawn attackerPawn )
+			{
+				attackerPawn?.Stats.Kill();
+			}
+
+			( pawn as PlayerPawn )?.Stats.Die();
+		}
 	}
 }
