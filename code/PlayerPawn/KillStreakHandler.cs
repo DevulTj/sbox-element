@@ -25,14 +25,20 @@ namespace Element
 
 		IReadOnlyDictionary<int, KillStreak> KillStreaks = new Dictionary<int, KillStreak>()
 		{
-			{ 2, new KillStreak { SoundPath = "my.sound", ChatMessage = "{0} got a Double kill!" } },
-			{ 3, new KillStreak { SoundPath = "my.sound", ChatMessage = "{0} got a Triple kill!" } },
+			{ 2, new KillStreak { SoundPath = "doublekill", ChatMessage = "{0} Double kill" } },
+			{ 3, new KillStreak { SoundPath = "triplekill", ChatMessage = "{0} Triple kill" } },
+			{ 4, new KillStreak { SoundPath = "killingspree", ChatMessage = "{0} Killing Spree" } },
 		};
 		
 		[GameEvent.PlayerKilled]
 		public void OnPlayerKilled( Entity attacker, Entity victim )
 		{
 			if ( Host.IsServer )
+			{
+				return;
+			}
+
+			if ( attacker != Local.Pawn )
 			{
 				return;
 			}
