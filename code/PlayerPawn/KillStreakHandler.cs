@@ -47,12 +47,12 @@ namespace Element
 
 			if ( KillStreaks.TryGetValue( CurrentKills, out KillStreak streak ) )
 			{
-				if ( streak.SoundPath != "" )
+				if ( !string.IsNullOrEmpty( streak.SoundPath ) )
 				{
 					Sound.FromScreen( streak.SoundPath );
 				}
 
-				if ( streak.ChatMessage != "" )
+				if ( !string.IsNullOrEmpty( streak.ChatMessage ) )
 				{
 					ChatBox.AddInformation( string.Format( streak.ChatMessage, attacker?.GetClientOwner()?.Name ?? "Player" ) );
 				}
