@@ -2,6 +2,7 @@
 		"name": "Element",
 		"version": "1.0",
 		"sharedassets": "*.*",
+		"ident": "devultj.element",
 
 		"depends": 
 		[

@@ -63,6 +63,13 @@ namespace Element
 			base.Respawn();
 		}
 
+
+		[ClientRpc]
+		public void SendKillMessage( Entity attacker )
+		{
+			Event.Run( "playerKilled", attacker, this );
+		}
+
 		public override void OnKilled()
 		{
 			base.OnKilled();
@@ -77,8 +84,11 @@ namespace Element
 
 			EnableAllCollisions = false;
 			EnableDrawing = false;
-		}
 
+			Event.Run( "playerKilled", LastAttacker, this );
+			// Send this to the client too
+			SendKillMessage( LastAttacker );
+		}
 
 		public override void Simulate( Client cl )
 		{
@@ -236,7 +246,7 @@ namespace Element
 			setup.FieldOfView += fov;
 		}
 
-		DamageInfo LastDamage;
+		public DamageInfo LastDamage { get; protected set; }
 
 		public override void TakeDamage( DamageInfo info )
 		{
@@ -287,5 +297,6 @@ namespace Element
 
 			new ViewPunch.Vertical( Angle, Time );
 		}
+
 	}
 }

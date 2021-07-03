@@ -9,6 +9,7 @@ namespace Element
 	/// This is the heart of the gamemode. It's responsible
 	/// for creating the player and stuff.
 	/// </summary>
+
 	[Library( "element", Title = "Element" )]
 	partial class Game : Sandbox.Game
 	{
@@ -19,6 +20,8 @@ namespace Element
 		[ServerVar( "element_min_players", Help = "The minimum players required to start." )]
 		public static int MinPlayers { get; set; } = 2;
 
+		public KillStreakHandler KillStreakHandler;
+
 		public Game()
 		{
 			//
@@ -28,7 +31,11 @@ namespace Element
 			//
 			if ( IsServer )
 			{
-				new UI.GameHud();
+				_ = new UI.GameHud();
+			}
+			else
+			{
+				KillStreakHandler = new KillStreakHandler();
 			}
 
 			_ = StartTickTimer();
