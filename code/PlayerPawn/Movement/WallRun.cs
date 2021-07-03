@@ -7,7 +7,7 @@ using System.Text;
 namespace Element
 {
 	[Library]
-	public class WallRun : NetworkClass
+	public class WallRun : NetworkComponent
 	{
 		public BasePlayerController Controller;
 

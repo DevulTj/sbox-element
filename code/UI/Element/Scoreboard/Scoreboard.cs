@@ -10,7 +10,6 @@ namespace Element.UI
 	public partial class ScoreboardBase<T> : Panel where T : ScoreboardEntry, new()
 	{
 		public Panel Canvas { get; protected set; }
-		public TextEntry Input { get; protected set; }
 
 		Dictionary<int, T> Entries = new();
 
@@ -55,7 +54,7 @@ namespace Element.UI
 			base.Tick();
 
 			var lastState = IsOpen;
-			IsOpen = Local.Client?.Input.Down( InputButton.Score ) ?? false;
+			IsOpen = Input.Down( InputButton.Score );
 
 			// On change
 			if ( lastState != IsOpen )

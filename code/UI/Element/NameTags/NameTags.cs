@@ -94,10 +94,8 @@ namespace Element.UI
 			//
 			// Where we putting the label, in world coords
 			//
-			var head = player.GetAttachment( "hat" );
-			if ( head.Position == Vector3.Zero )
-				head.Position = player.EyePos;
 
+			var head = player.GetAttachment("hat") ?? new Transform( player.EyePos );
 			var labelPos = head.Position + Vector3.Up * 5;
 
 

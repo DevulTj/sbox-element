@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Element
 {
 	[Library]
-	public class Duck : NetworkClass
+	public class Duck : NetworkComponent
 	{
 		public BasePlayerController Controller;
 
@@ -23,7 +23,7 @@ namespace Element
 
 		public virtual void PreTick() 
 		{
-			bool wants = Controller.Input.Down( InputButton.Duck );
+			bool wants = Input.Down( InputButton.Duck );
 
 			if ( wants != IsActive ) 
 			{

@@ -5,7 +5,7 @@ using System;
 namespace Element
 {
 	[Library]
-	public class Slide : NetworkClass
+	public class Slide : NetworkComponent
 	{
 		public BasePlayerController Controller;
 
@@ -35,7 +35,7 @@ namespace Element
 
 		public virtual void PreTick()
 		{
-			bool isDown = Controller.Input.Down( InputButton.Duck );
+			bool isDown = Input.Down( InputButton.Duck );
 
 			var oldWish = Wish;
 			Wish = isDown;
