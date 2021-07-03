@@ -23,10 +23,10 @@ namespace Element
 
 		int CurrentKills = 0;
 
-		List<KillStreak> KillStreaks = new()
+		IReadOnlyDictionary<int, KillStreak> KillStreaks = new Dictionary<int, KillStreak>()
 		{
-			new KillStreak { Amount = 2, SoundPath = "my.sound", ChatMessage = "{0} got a Double kill!" },
-			new KillStreak { Amount = 3, SoundPath = "my.sound", ChatMessage = "{0} got a Triple kill!" },
+			{ 2, new KillStreak { SoundPath = "my.sound", ChatMessage = "{0} got a Double kill!" } },
+			{ 3, new KillStreak { SoundPath = "my.sound", ChatMessage = "{0} got a Triple kill!" } },
 		};
 		
 		[GameEvent.PlayerKilled]
@@ -45,21 +45,16 @@ namespace Element
 			LastKill = 0;
 			CurrentKills++;
 
-			foreach ( var streak in KillStreaks )
+			if ( KillStreaks.TryGetValue( CurrentKills, out KillStreak streak ) )
 			{
-				if ( CurrentKills == streak.Amount )
+				if ( streak.SoundPath != "" )
 				{
-					if ( streak.SoundPath != "" )
-					{
-						Sound.FromScreen( streak.SoundPath );
-					}
+					Sound.FromScreen( streak.SoundPath );
+				}
 
-					if ( streak.ChatMessage != "" )
-					{
-						ChatBox.AddInformation( string.Format( streak.ChatMessage, attacker?.GetClientOwner()?.Name ?? "Player" ) );
-					}
-
-					break;
+				if ( streak.ChatMessage != "" )
+				{
+					ChatBox.AddInformation( string.Format( streak.ChatMessage, attacker?.GetClientOwner()?.Name ?? "Player" ) );
 				}
 			}
 		}
