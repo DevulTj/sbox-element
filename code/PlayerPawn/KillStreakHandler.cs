@@ -9,7 +9,7 @@ namespace Element
 	public struct KillStreak
 	{
 		public int Amount { get; set; }
-		public string SoundPath { get; set; };
+		public string SoundPath { get; set; }
 		public string ChatMessage { get; set; }
 	}
 
