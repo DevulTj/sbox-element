@@ -25,8 +25,8 @@ namespace Element
 
 		IReadOnlyDictionary<int, KillStreak> KillStreaks = new Dictionary<int, KillStreak>()
 		{
-			{ 2, new KillStreak { SoundPath = "doublekill", ChatMessage = "{0} Double kill" } },
-			{ 3, new KillStreak { SoundPath = "triplekill", ChatMessage = "{0} Triple kill" } },
+			{ 2, new KillStreak { SoundPath = "element.streaks.double", ChatMessage = "{0} Double kill" } },
+			{ 3, new KillStreak { SoundPath = "element.streaks.triple", ChatMessage = "{0} Triple kill" } },
 			{ 4, new KillStreak { SoundPath = "killingspree", ChatMessage = "{0} Killing Spree" } },
 		};
 		
