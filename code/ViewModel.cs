@@ -118,8 +118,8 @@ partial class DmViewModel : BaseViewModel
 
 		noisePos += DeltaTime * NoiseSpeed;
 
-		acceleration += Vector3.Left * -Local.Client.Input.MouseDelta.x * DeltaTime * MouseScale * 0.5f   * (1f-aimLerp * 2f);
-		acceleration += Vector3.Up * -Local.Client.Input.MouseDelta.y * DeltaTime * MouseScale * (1f-aimLerp * 2f);
+		acceleration += Vector3.Left * -Input.MouseDelta.x * DeltaTime * MouseScale * 0.5f   * (1f-aimLerp * 2f);
+		acceleration += Vector3.Up * -Input.MouseDelta.y * DeltaTime * MouseScale * (1f-aimLerp * 2f);
 		acceleration += -velocity * ReturnForce * DeltaTime;
 
 		// Apply horizontal offsets based on walking direction
