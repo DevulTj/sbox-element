@@ -1,31 +1,35 @@
 vitalsinfo {
-  position: absolute;
-  width: 140px;
-  height: 32px;
-  margin-left: -70px;
-  left: 50%;
-  bottom: 48px;
-  color: #fff;
-  font-family: Biko;
-
-  label {
-    text-shadow: 0px 0px 20px #000;
-  }
-
-  .healthImage {
-    width: 32px;
+    position: absolute;
+    width: 140px;
     height: 32px;
-    background-image: url( /ui/generic/health.png );
-    background-size: 100%;
-    background-repeat: no-repeat;
-  }
+    margin-left: -70px;
+    left: 50%;
+    bottom: 48px;
+    color: #fff;
+    font-family: Poppins;
+    background-image-tint: rgba( white, 0.95 );
+    backdrop-filter: blur( 64px );
+    border-radius: 16px;
+    border: 3px solid rgba(40, 40, 40, 0.5);
 
-  .healthAmount {
-    top: 10px;
-    font-size: 34px;
-    color: #ECECEC;
-    min-width: 50px;
-    text-align: center;
-    transition: color 0.2s ease;
-  }
+    label {
+        text-shadow: 0px 0px 20px #000;
+    }
+
+    .healthImage {
+        width: 32px;
+        height: 32px;
+        background-image: url( /ui/generic/health.png );
+        background-size: 100%;
+        background-repeat: no-repeat;
+    }
+
+    .healthAmount {
+        top: 10px;
+        font-size: 34px;
+        color: #ECECEC;
+        min-width: 50px;
+        text-align: center;
+        transition: color 0.2s ease;
+    }
 }

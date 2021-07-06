@@ -5,27 +5,33 @@ roundinfo {
     align-items: flex-start;
     justify-content: center;
     padding-top: 40px;
-    text-shadow: 0px 0px 20px #000;
 
     label {
-        font-family: Biko;
+        font-family: Poppins;
         color: white;
     }
 
     .firstText {
+        background-image-tint: rgba( white, 0.95 );
+        backdrop-filter: blur( 64px );
         background-color: rgba(80, 80, 80, 0.5);
         font-size: 32px;
-        border-radius: 25px;
+        border-radius: 16px;
         padding: 8px 24px;
-        border: 2px solid rgba(80, 80, 80, 1);
+        border: 3px solid rgba(40, 40, 40, 0.5);
     }
 
     .secondText {
+        background-image-tint: rgba( white, 0.95 );
+        backdrop-filter: blur( 64px );
+
+        width: 164px;
+        text-align: center;
         left: 8px;
         background-color: rgba(80, 80, 80, 0.5);
         font-size: 32px;
-        border-radius: 25px;
+        border-radius: 16px;
         padding: 8px 24px;
-        border: 2px solid rgba(80, 80, 80, 1);
+        border: 3px solid rgba(40, 40, 40, 0.5);
     }
 }

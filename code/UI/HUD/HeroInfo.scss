@@ -6,30 +6,32 @@ heroinfo {
     color: #fff;
     height: 64px;
     width: inherit;
-    font-family: Biko;
+    font-family: Poppins;
     background-color: rgba(80, 80, 80, 0.5);
     padding: 8px 24px;
     font-size: 32px;
     text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.85);
-    border-radius: 25px;
-    border: 2px solid rgba(80, 80, 80, 1);
+    background-image-tint: rgba( white, 0.95 );
+    backdrop-filter: blur( 64px );
+    border-radius: 16px;
+    border: 3px solid rgba(40, 40, 40, 0.5);
 
     label {
         text-shadow: 0px 0px 20px #000;
     }
 
     .heroIcon {
-        top: -10px;
-        left: -10px;
-        width: 64px;
-        height: 64px;
+        top: -4px;
+        left: -15px;
+        width: 50px;
+        height: 50px;
         border-radius: 100px;
         padding: 4px;
         box-shadow: 0px 0px 8px rgba(0, 0, 50, 0.5);
     }
 
     .heroName {
-        top: 0px;
+        top: -3px;
         font-size: 34px;
         color: #ECECEC;
         min-width: 50px;
